@@ -6,20 +6,31 @@
 
 - (void)show:(CDVInvokedUrlCommand*)command {
 
-  // TODO pass in
-  NSString *message = @"Hi, this is a test Toast";
+  NSString *message  = [command.arguments objectAtIndex:0];
+  NSString *duration = [command.arguments objectAtIndex:1];
+  NSString *position = [command.arguments objectAtIndex:2];
 
-  // TODO pass in
-  iToastGravity grv = iToastGravityCenter;
+  if (![position isEqual: @"top"] && ![position isEqual: @"center"] && ![position isEqual: @"bottom"]) {
+    CDVPluginResult * pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"invalid position. valid options are 'top', 'center' and 'bottom'"];
+    [self writeJavascript:[pluginResult toErrorCallbackString:command.callbackId]];
+    return;
+  }
 
-  // TODO pass in
-  NSInteger drTime = iToastDurationShort;
+  NSInteger durationInt;
+  if ([duration isEqual: @"short"]) {
+    durationInt = 2;
+  } else if ([duration isEqual: @"long"]) {
+    durationInt = 5;
+  } else {
+    CDVPluginResult * pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"invalid duration. valid options are 'short' and 'long'"];
+    [self writeJavascript:[pluginResult toErrorCallbackString:command.callbackId]];
+    return;
+  }
 
-  [self.view makeToast:@"This is a piece of toast."];
-
-//  [[[[iToast makeText:NSLocalizedString(message, @"")]
-//       setGravity:grv offsetLeft:0 offsetTop:0] setDuration:drTime] show];
-
+  [self.webView makeToast:message duration:durationInt position:position];
+    
+  CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+  [self writeJavascript:[pluginResult toSuccessCallbackString:command.callbackId]];
 }
 
 @end

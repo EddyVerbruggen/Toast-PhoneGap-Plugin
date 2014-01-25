@@ -14,21 +14,41 @@ public class Toast extends CordovaPlugin {
   public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
     if (ACTION_SHOW_EVENT.equals(action)) {
 
-      // TODO pass in
-      final CharSequence text = "Hello toast!";
+      final String message = args.getString(0);
+      final String duration = args.getString(1);
+      final String position = args.getString(2);
 
-      // TODO pass in duration, accept a few options: short, long (depends on iOS possibilities as well)
-      final int duration = android.widget.Toast.LENGTH_LONG; // short=2sec, long=4secs
+      if (!"top".equals(position) && !"center".equals(position) && !"bottom".equals(position)) {
+        callbackContext.error("invalid position. valid options are 'top', 'center' and 'bottom'");
+        return false;
+      }
+
+      int durationInt;
+      if ("short".equals(duration)) {
+        durationInt = android.widget.Toast.LENGTH_SHORT;
+      } else if ("long".equals(duration)) {
+        durationInt = android.widget.Toast.LENGTH_LONG;
+      } else {
+        callbackContext.error("invalid duration. valid options are 'short' and 'long'");
+        return false;
+      }
 
       cordova.getActivity().runOnUiThread(new Runnable() {
         public void run() {
           android.widget.Toast toast = android.widget.Toast.makeText(
               webView.getContext(),
-              text,
-              duration);
+              message,
+              durationInt);
 
-          // TODO pass in position, accept a few options: top, bottom, center (depends on iOS possibilities as well)
-          toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+          if ("top".equals(position)) {
+            // TODO correct position
+            toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+          } else  if ("bottom".equals(position)) {
+            // TODO correct position
+            toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+          } else {
+            toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+          }
 
           toast.show();
 

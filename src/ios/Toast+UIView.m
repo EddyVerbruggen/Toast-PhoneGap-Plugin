@@ -20,6 +20,7 @@ static const CGFloat CSToastMaxWidth            = 0.8;      // 80% of parent vie
 static const CGFloat CSToastMaxHeight           = 0.8;      // 80% of parent view height
 static const CGFloat CSToastHorizontalPadding   = 10.0;
 static const CGFloat CSToastVerticalPadding     = 10.0;
+static const CGFloat CSToastTopBottomOffset     = 10.0;
 static const CGFloat CSToastCornerRadius        = 10.0;
 static const CGFloat CSToastOpacity             = 0.8;
 static const CGFloat CSToastFontSize            = 16.0;
@@ -114,7 +115,7 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
                           delay:0.0
                         options:(UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionAllowUserInteraction)
                      animations:^{
-                         toast.alpha = 1.0;
+                         toast.alpha = CSToastOpacity;
                      } completion:^(BOOL finished) {
                          NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:duration target:self selector:@selector(toastTimerDidFinish:) userInfo:toast repeats:NO];
                          // associate the timer with the toast view
@@ -211,9 +212,9 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
     if([point isKindOfClass:[NSString class]]) {
         // convert string literals @"top", @"bottom", @"center", or any point wrapped in an NSValue object into a CGPoint
         if([point caseInsensitiveCompare:@"top"] == NSOrderedSame) {
-            return CGPointMake(self.bounds.size.width/2, (toast.frame.size.height / 2) + CSToastVerticalPadding);
+            return CGPointMake(self.bounds.size.width/2, (toast.frame.size.height / 2) + CSToastVerticalPadding + CSToastTopBottomOffset);
         } else if([point caseInsensitiveCompare:@"bottom"] == NSOrderedSame) {
-            return CGPointMake(self.bounds.size.width/2, (self.bounds.size.height - (toast.frame.size.height / 2)) - CSToastVerticalPadding);
+            return CGPointMake(self.bounds.size.width/2, (self.bounds.size.height - (toast.frame.size.height / 2)) - CSToastVerticalPadding - CSToastTopBottomOffset);
         } else if([point caseInsensitiveCompare:@"center"] == NSOrderedSame) {
             return CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2);
         }
