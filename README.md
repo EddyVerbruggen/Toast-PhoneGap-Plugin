@@ -1,6 +1,6 @@
 # PhoneGap Toast plugin
 
-for Android and iOS, by [Eddy Verbruggen](@eddyverbruggen)
+for Android and iOS, by [Eddy Verbruggen](http://www.twitter.com/@eddyverbruggen)
 
 ## 0. Index
 
@@ -98,8 +98,8 @@ Toast.js is brought in automatically. There is no need to change or add anything
 ## 4. Usage
 You have two choices to make when showing a Toast: where to show it and for how long.
 * show(message, duration, position)
-** duration: short / long
-** position: top / center / bottom
+ * duration: short / long
+ * position: top / center / bottom
 
 You can also use any of these convenience methods:
 * showShortTop(message)
