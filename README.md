@@ -1,6 +1,6 @@
 # PhoneGap Toast plugin
 
-for Android and iOS, by [Eddy Verbruggen](http://www.twitter.com/@eddyverbruggen)
+for Android and iOS, by [Eddy Verbruggen](http://www.x-services.nl/phonegap-toast-plugin/796)
 
 ## 0. Index
 
