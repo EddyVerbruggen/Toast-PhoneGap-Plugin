@@ -98,8 +98,8 @@ Toast.js is brought in automatically. There is no need to change or add anything
 ## 4. Usage
 You have two choices to make when showing a Toast: where to show it and for how long.
 * show(message, duration, position)
- * duration: short / long
- * position: top / center / bottom
+ * duration: 'short', 'long'
+ * position: 'top', 'center', 'bottom'
 
 You can also use any of these convenience methods:
 * showShortTop(message)
@@ -120,7 +120,7 @@ You can copy-paste these lines of code for a quick test:
 
 This plugin was enhanced for Plugman / PhoneGap Build by [Eddy Verbruggen](http://www.x-services.nl).
 The Android code was entirely created by me.
-I only has to slightly adjust this excellent [Toast for iOS project by Charles Scalesse] (https://github.com/scalessec/Toast).
+For iOS most credits go to this excellent [Toast for iOS project by Charles Scalesse] (https://github.com/scalessec/Toast).
 
 ## 6. License
 
