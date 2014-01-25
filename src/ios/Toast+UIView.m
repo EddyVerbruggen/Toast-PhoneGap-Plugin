@@ -1,11 +1,3 @@
-//
-//  Toast+UIView.m
-//  Toast
-//  Version 2.2
-//
-//  Copyright 2013 Charles Scalesse.
-//
-
 #import "Toast+UIView.h"
 #import <QuartzCore/QuartzCore.h>
 #import <objc/runtime.h>
@@ -18,15 +10,15 @@
 // general appearance
 static const CGFloat CSToastMaxWidth            = 0.8;      // 80% of parent view width
 static const CGFloat CSToastMaxHeight           = 0.8;      // 80% of parent view height
-static const CGFloat CSToastHorizontalPadding   = 10.0;
-static const CGFloat CSToastVerticalPadding     = 10.0;
+static const CGFloat CSToastHorizontalPadding   = 16.0;
+static const CGFloat CSToastVerticalPadding     = 12.0;
 static const CGFloat CSToastTopBottomOffset     = 10.0;
-static const CGFloat CSToastCornerRadius        = 10.0;
+static const CGFloat CSToastCornerRadius        = 20.0;
 static const CGFloat CSToastOpacity             = 0.8;
-static const CGFloat CSToastFontSize            = 16.0;
+static const CGFloat CSToastFontSize            = 13.0;
 static const CGFloat CSToastMaxTitleLines       = 0;
 static const CGFloat CSToastMaxMessageLines     = 0;
-static const NSTimeInterval CSToastFadeDuration = 0.2;
+static const NSTimeInterval CSToastFadeDuration = 0.3;
 
 // shadow appearance
 static const CGFloat CSToastShadowOpacity       = 0.8;
