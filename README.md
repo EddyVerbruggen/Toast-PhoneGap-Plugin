@@ -24,13 +24,13 @@ It's great for showing a non intrusive native notification which is guaranteed a
 * Pending official support by [PhoneGap Build](https://build.phonegap.com/plugins).
 
 Example usages:
-* There were validation errors
-* Account created successfully
-* The record was deleted
-* Login successful
-* The battery is almost dead
-* You are now logged out
-* Connection failure, plesae try again later
+* "There were validation errors"
+* "Account created successfully"
+* "The record was deleted"
+* "Login successful"
+* "The battery is almost dead"
+* "You are now logged out"
+* "Connection failure, please try again later"
 
 ## 2. Screenshots
 
