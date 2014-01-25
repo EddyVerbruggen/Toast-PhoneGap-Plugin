@@ -18,12 +18,19 @@ for Android and iOS, by [Eddy Verbruggen](http://www.twitter.com/@eddyverbruggen
 
 This plugin allows you to show a native Toast (a little text popup) on iOS and Android.
 It's great for showing a non intrusive native notification which is guaranteed always in the viewport of the browser.
-Examples: 'Account created', 'The record was deleted', 'Login successful', 'The battery is almost dead', 'You are now logged out', 'Connection failure, plesae try again later', ..
-
 * You can choose where to show the Toast: at the top, center or bottom of the screen.
-* You can choose two durations: short (2 seconds), or long (5 seconds), after which the Toast automatically disappears.
+* You can choose two durations: short (approx. 2 seconds), or long (approx. 5 seconds), after which the Toast automatically disappears.
 * Compatible with [Cordova Plugman](https://github.com/apache/cordova-plugman).
 * Pending official support by [PhoneGap Build](https://build.phonegap.com/plugins).
+
+Example usages:
+* There were validation errors
+* Account created successfully
+* The record was deleted
+* Login successful
+* The battery is almost dead
+* You are now logged out
+* Connection failure, plesae try again later
 
 ## 2. Screenshots
 
