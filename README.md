@@ -1,6 +1,6 @@
-# PhoneGap Toast plugin for Android and iOS
+# PhoneGap Toast plugin
 
-by [Eddy Verbruggen](@eddyverbruggen)
+for Android and iOS, by [Eddy Verbruggen](@eddyverbruggen)
 
 ## 0. Index
 
@@ -26,7 +26,7 @@ It's great for showing a non intrusive native notification which is guaranteed a
 
 ## 2. Screenshots
 
-iOS 7
+iOS
 
 ![ScreenShot](screenshot-ios-toast.png)
 
@@ -97,30 +97,30 @@ Toast.js is brought in automatically. There is no need to change or add anything
 
 ## 4. Usage
 You have two choices to make when showing a Toast: where to show it and for how long.
-* toast.show(message, duration, position)
-- duration: short / long
-- position: top / center / bottom
+* show(message, duration, position)
+** duration: short / long
+** position: top / center / bottom
 
 You can also use any of these convenience methods:
-* toast.showShortTop(message)
-* toast.showShortCenter(message)
-* toast.showShortBottom(message)
-* toast.showLongTop(message)
-* toast.showLongCenter(message)
-* toast.showLongBottom(message)
+* showShortTop(message)
+* showShortCenter(message)
+* showShortBottom(message)
+* showLongTop(message)
+* showLongCenter(message)
+* showLongBottom(message)
 
 You can copy-paste these lines of code for a quick test:
 ```html
-<button onclick="window.plugins.toast.shortTop('hi, this is cool!?', function(a){console.log('toast success: ' + a)}, function(b){alert('toast error: ' + b)})">Toast short top</button><br/><br/>
-<button onclick="window.plugins.toast.longBottom('hi, this is cewl!', function(a){console.log('toast success: ' + a)}, function(b){alert('toast error: ' + b)})">Toast long bottom</button><br/><br/>
-<button onclick="window.plugins.toast._show('hi!', 'bottom', 'xx_long', function(a){console.log('toast success: ' + a)}, function(b){alert('toast error: ' + b)})">Toast invalid options</button><br/><br/>
+<button onclick="window.plugins.toast.showShortTop('hi!', function(a){console.log('toast success: ' + a)}, function(b){alert('toast error: ' + b)})">Toast showShortTop</button>
+<button onclick="window.plugins.toast.showLongBottom('hi!', function(a){console.log('toast success: ' + a)}, function(b){alert('toast error: ' + b)})">Toast showLongBottom</button>
+<button onclick="window.plugins.toast.show('hi!', 'long', 'center', function(a){console.log('toast success: ' + a)}, function(b){alert('toast error: ' + b)})">Toast show long center</button>
 ```
 
 ## 5. CREDITS ##
 
 This plugin was enhanced for Plugman / PhoneGap Build by [Eddy Verbruggen](http://www.x-services.nl).
 The Android code was entirely created by me.
-I only has to slightly adjust [this excellent Toast project] (https://github.com/scalessec/Toast).
+I only has to slightly adjust this excellent [Toast for iOS project by Charles Scalesse] (https://github.com/scalessec/Toast).
 
 ## 6. License
 
