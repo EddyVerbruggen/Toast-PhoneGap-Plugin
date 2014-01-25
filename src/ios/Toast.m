@@ -1,6 +1,6 @@
 #import "Toast.h"
-#import <Cordova/CDV.h> // TODO: required?
-#import "lib/iToast.h"
+#import "Toast+UIView.h"
+#import <Cordova/CDV.h>
 
 @implementation Toast
 
@@ -15,8 +15,10 @@
   // TODO pass in
   NSInteger drTime = iToastDurationShort;
 
-  [[[[iToast makeText:NSLocalizedString(message, @"")]
-       setGravity:grv offsetLeft:0 offsetTop:0] setDuration:drTime] show];
+  [self.view makeToast:@"This is a piece of toast."];
+
+//  [[[[iToast makeText:NSLocalizedString(message, @"")]
+//       setGravity:grv offsetLeft:0 offsetTop:0] setDuration:drTime] show];
 
 }
 

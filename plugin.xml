@@ -30,10 +30,12 @@
       </feature>
     </config-file>
 
-    <header-file src="src/ios/lib/iToast.h"/>
-    <source-file src="src/ios/lib/iToast.m"/>
+    <header-file src="src/ios/Toast+UIView.h"/>
+    <source-file src="src/ios/Toast+UIView.m"/>
     <header-file src="src/ios/Toast.h"/>
     <source-file src="src/ios/Toast.m"/>
+
+    <framework src="QuartzCore.framework" />
   </platform>
 
   <!-- android -->
