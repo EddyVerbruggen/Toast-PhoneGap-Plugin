@@ -21,7 +21,7 @@ It's great for showing a non intrusive native notification which is guaranteed a
 * You can choose where to show the Toast: at the top, center or bottom of the screen.
 * You can choose two durations: short (approx. 2 seconds), or long (approx. 5 seconds), after which the Toast automatically disappears.
 * Compatible with [Cordova Plugman](https://github.com/apache/cordova-plugman).
-* Pending official support by [PhoneGap Build](https://build.phonegap.com/plugins).
+* Officially supported by [PhoneGap Build](https://build.phonegap.com/plugins).
 
 Example usages:
 * "There were validation errors"
@@ -88,9 +88,9 @@ iOS: Copy the two `.h` and two `.m` files to `platforms/ios/<ProjectName>/Plugin
 
 Android: Copy `Toast.java` to `platforms/android/src/nl/xservices/plugins` (create the folders)
 
-### PhoneGap Build (pending approval!)
+### PhoneGap Build
 
-Toast will soon work with PhoneGap build too, but only with PhoneGap 3.0 and up.
+Toast works with PhoneGap build too, but only with PhoneGap 3.0 and up.
 
 Just add the following xml to your `config.xml` to always use the latest version of this plugin:
 ```xml
