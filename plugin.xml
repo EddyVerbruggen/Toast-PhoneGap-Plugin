@@ -50,4 +50,15 @@
     <source-file src="src/android/nl/xservices/plugins/Toast.java" target-dir="src/nl/xservices/plugins"/>
   </platform>
 
+  <!-- wp8.. enable when we have a proper iOS-style Toast impl, not the native ShellToast impl which is more like a local push message
+  <platform name="wp8">
+    <config-file target="config.xml" parent="/*">
+      <feature name="Toast">
+        <param name="wp-package" value="Toast"/>
+      </feature>
+    </config-file>
+
+    <source-file src="src/wp8/Toast.cs" />
+  </platform-->
+
 </plugin>
