@@ -12,6 +12,7 @@ using WPCordovaClassLib.Cordova.JSON;
 // --> Conclusion: ShellToast is more like a localnotification/pushmessage, so it's a nice WP8 impl of the LocalNotification plugin,
 //                 So we'll only add WP8 Toast plugin support if we can create an similar impl as the iOS version of this Toast plugin.
 //                 Hence, leaving out the WP8 config in plugin.xml for now.
+// --> Future work based on the conclusion: investigate these options http://stackoverflow.com/questions/20346219/how-to-show-toast-after-performing-some-functionality-in-windows-phone-8
 namespace Cordova.Extension.Commands {
 	public class Toast : BaseCommand {
 
