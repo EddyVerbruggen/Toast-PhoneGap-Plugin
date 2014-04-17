@@ -50,7 +50,7 @@ namespace WPCordovaClassLib.Cordova.Commands
 
                         Border b = new Border();
                         b.CornerRadius = new CornerRadius(12);
-                        b.Background = new SolidColorBrush(Color.FromArgb(180, 55, 55, 55));
+                        b.Background = new SolidColorBrush(Color.FromArgb(190, 55, 55, 55));
                         b.HorizontalAlignment = HorizontalAlignment.Center;
                         
                         Grid pgrid = new Grid();
@@ -91,7 +91,7 @@ namespace WPCordovaClassLib.Cordova.Commands
                         grid.Children.Add(popup);
                         popup.IsOpen = true;
 
-                        int hideDelay = "long".Equals(duration) ? 5500 : 2500;
+                        int hideDelay = "long".Equals(duration) ? 5500 : 2800;
                         this.hidePopup(hideDelay);
                     }
                 }

@@ -37,13 +37,15 @@ Example usages:
 
 iOS
 
-![ScreenShot](screenshot-ios-toast.png)
+![ScreenShot](screenshots/screenshot-ios-toast.png)
 
 Android
 
-![ScreenShot](screenshot-android-toast.png)
+![ScreenShot](screenshots/screenshot-android-toast.png)
 
-WP8 (will be added soon)
+Windows Phone 8
+
+![ScreenShot](screenshots/screenshot-wp8.jpg)
 
 ## 3. Installation
 
@@ -143,6 +145,7 @@ For iOS most credits go to this excellent [Toast for iOS project by Charles Scal
 
 ## 6. CHANGELOG
 2.0: WP8 support
+
 1.0: initial version supporting Android and iOS
 
 ## 7. License
