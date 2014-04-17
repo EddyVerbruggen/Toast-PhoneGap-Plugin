@@ -21,6 +21,8 @@
     durationInt = 2;
   } else if ([duration isEqual: @"long"]) {
     durationInt = 5;
+  } else if ([duration isEqual: @"tillclick"]){
+      durationInt = false;
   } else {
     CDVPluginResult * pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"invalid duration. valid options are 'short' and 'long'"];
     [self writeJavascript:[pluginResult toErrorCallbackString:command.callbackId]];
