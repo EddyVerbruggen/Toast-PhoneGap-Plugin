@@ -106,8 +106,10 @@ Toast.js is brought in automatically. There is no need to change or add anything
 ## 4. Usage
 You have two choices to make when showing a Toast: where to show it and for how long.
 * show(message, duration, position)
- * duration: 'short', 'long'
+ * duration: 'short', 'long', 'tillclick' 
  * position: 'top', 'center', 'bottom'
+
+NOTE: tillclick only available on iOS !
 
 You can also use any of these convenience methods:
 * showShortTop(message)
