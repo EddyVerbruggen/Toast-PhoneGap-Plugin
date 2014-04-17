@@ -137,6 +137,13 @@ You can copy-paste these lines of code for a quick test:
 <button onclick="window.plugins.toast.show('Hello there!', 'long', 'center', function(a){console.log('toast success: ' + a)}, function(b){alert('toast error: ' + b)})">Toast show long center</button>
 ```
 
+### WP8 quircks
+The WP8 implementation needs a little more work, but it's perfectly useable when you keep this in mind:
+* You can't show two Toasts simultaneously.
+* Wait until the first Toast is hidden before the second is shown, otherwise the second one will be hidden quickly.
+* The positioning of the bottom-aligned Toast is not perfect, but keep it down to 1 or 2 lines of text and you're fine.
+
+
 ## 5. CREDITS
 
 This plugin was enhanced for Plugman / PhoneGap Build by [Eddy Verbruggen](http://www.x-services.nl).
