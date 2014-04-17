@@ -1,35 +1,111 @@
-using WPCordovaClassLib.Cordova;
-using WPCordovaClassLib.Cordova.Commands;
-using WPCordovaClassLib.Cordova.JSON;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using Microsoft.Phone.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Media;
 
-// TODO create a custom overlay similar to the iOS implementation because the ShellToast on WP is
-// very different from the native Android Toast the iOS impl is inspired on.
-// Differences:
-// - Only WP8 update 3 will show a Toast when in the foreground
-// - A ShellToast can't be positioned
-// - A ShellToast has a fixed duration
-// DOCS: http://msdn.microsoft.com/en-us/library/windowsphone/develop/jj662938(v=vs.105).aspx
-// --> Conclusion: ShellToast is more like a localnotification/pushmessage, so it's a nice WP8 impl of the LocalNotification plugin,
-//                 So we'll only add WP8 Toast plugin support if we can create an similar impl as the iOS version of this Toast plugin.
-//                 Hence, leaving out the WP8 config in plugin.xml for now.
-// --> Future work based on the conclusion: investigate these options http://stackoverflow.com/questions/20346219/how-to-show-toast-after-performing-some-functionality-in-windows-phone-8
-namespace Cordova.Extension.Commands {
-	public class Toast : BaseCommand {
+namespace WPCordovaClassLib.Cordova.Commands
+{
+    public class Toast : BaseCommand
+    {
 
-    public void show(string jsonArgs) {
+        Popup popup;
 
-      var options = JsonHelper.Deserialize<string[]>(jsonArgs);
+        private PhoneApplicationPage Page
+        {
+            get
+            {
+                PhoneApplicationPage page = null;
+                PhoneApplicationFrame frame = Application.Current.RootVisual as PhoneApplicationFrame;
+                if (frame != null)
+                {
+                    page = frame.Content as PhoneApplicationPage;
+                }
+                return page;
+            }
+        }
 
-      var message = options[0];
-//      var duration = options[1];
-//      var position = options[2];
+        public void show(string options)
+        {
+            string[] args = JSON.JsonHelper.Deserialize<string[]>(options);
+            var message = args[0];
+            var duration = args[1];
+            var position = args[2];
+            string aliasCurrentCommandCallbackId = args[3];
 
-      ShellToast toast = new ShellToast();
-      toast.Title = "Test";
-      toast.Content = message;
-      toast.Show();
+            Deployment.Current.Dispatcher.BeginInvoke(() =>
+            {
+                PhoneApplicationPage page = Page;
+                if (page != null)
+                {
+                    Grid grid = page.FindName("LayoutRoot") as Grid;
+                    if (grid != null)
+                    {
+                        TextBlock tb = new TextBlock();
+                        tb.TextWrapping = TextWrapping.Wrap;
+                        tb.TextAlignment = TextAlignment.Center;
+                        tb.Text = message;
+                        tb.Foreground = new SolidColorBrush(Color.FromArgb(255,255,255,255)); // white
 
-			DispatchCommandResult(new PluginResult(PluginResult.Status.OK));
-		}
-	}
+                        Border b = new Border();
+                        b.CornerRadius = new CornerRadius(12);
+                        b.Background = new SolidColorBrush(Color.FromArgb(180, 55, 55, 55));
+                        b.HorizontalAlignment = HorizontalAlignment.Center;
+                        
+                        Grid pgrid = new Grid();
+                        pgrid.HorizontalAlignment = HorizontalAlignment.Stretch;
+                        pgrid.VerticalAlignment = VerticalAlignment.Stretch;
+                        pgrid.Margin = new Thickness(20);
+                        pgrid.Children.Add(tb);
+                        pgrid.Width = Application.Current.Host.Content.ActualWidth - 80;
+
+                        b.Child = pgrid;
+                        if (popup != null && popup.IsOpen)
+                        {
+                            popup.IsOpen = false;
+                        }
+                        popup = new Popup();
+                        popup.Child = b;
+  
+                        popup.HorizontalOffset = 20;
+                        popup.Width = Application.Current.Host.Content.ActualWidth;
+                        popup.HorizontalAlignment = HorizontalAlignment.Center;
+
+                        if ("top".Equals(position))
+                        {
+                            popup.VerticalAlignment = VerticalAlignment.Top;
+                            popup.VerticalOffset = 20;
+                        }
+                        else if ("bottom".Equals(position))
+                        {
+                            popup.VerticalAlignment = VerticalAlignment.Bottom;
+                            popup.VerticalOffset = -100; // TODO can do better
+                        }
+                        else // center
+                        {
+                            popup.VerticalAlignment = VerticalAlignment.Center;
+                            popup.VerticalOffset = -50; // TODO can do way better
+                        }
+
+                        grid.Children.Add(popup);
+                        popup.IsOpen = true;
+
+                        int hideDelay = "long".Equals(duration) ? 5500 : 2500;
+                        this.hidePopup(hideDelay);
+                    }
+                }
+                else
+                {
+                    DispatchCommandResult(new PluginResult(PluginResult.Status.INSTANTIATION_EXCEPTION));
+                }
+            });
+        }
+
+        private async void hidePopup(int delay)
+        {
+            await Task.Delay(delay);
+            popup.IsOpen = false;
+        }
+    }
 }

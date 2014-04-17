@@ -1,6 +1,6 @@
 # PhoneGap Toast plugin
 
-for Android and iOS, by [Eddy Verbruggen](http://www.x-services.nl/phonegap-toast-plugin/796)
+for Android, iOS and WP8, by [Eddy Verbruggen](http://www.x-services.nl/phonegap-toast-plugin/796)
 
 ## 0. Index
 
@@ -12,11 +12,12 @@ for Android and iOS, by [Eddy Verbruggen](http://www.x-services.nl/phonegap-toas
 	3. [PhoneGap Build](#phonegap-build)
 4. [Usage](#4-usage)
 5. [Credits](#5-credits)
-6. [License](#6-license)
+6. [Changelog](#6-changelog)
+7. [License](#7-license)
 
 ## 1. Description
 
-This plugin allows you to show a native Toast (a little text popup) on iOS and Android.
+This plugin allows you to show a native Toast (a little text popup) on iOS, Android and WP8.
 It's great for showing a non intrusive native notification which is guaranteed always in the viewport of the browser.
 * You can choose where to show the Toast: at the top, center or bottom of the screen.
 * You can choose two durations: short (approx. 2 seconds), or long (approx. 5 seconds), after which the Toast automatically disappears.
@@ -41,6 +42,8 @@ iOS
 Android
 
 ![ScreenShot](screenshot-android-toast.png)
+
+WP8 (will be added soon)
 
 ## 3. Installation
 
@@ -73,6 +76,12 @@ Toast.js is brought in automatically. There is no need to change or add anything
   <param name="android-package" value="nl.xservices.plugins.Toast" />
 </feature>
 ```
+```xml
+<!-- for WP8 -->
+<feature name="Toast">
+  <param name="wp-package" value="Toast"/>
+</feature>
+```
 
 For iOS, you'll need to add the `QuartzCore.framework` to your project (it's for automatically removing the Toast after a few seconds).
 Click your project, Build Phases, Link Binary With Libraries, search for and add `QuartzCore.framework`.
@@ -82,11 +91,13 @@ Click your project, Build Phases, Link Binary With Libraries, search for and add
 <script type="text/javascript" src="js/Toast.js"></script>
 ```
 
-3\. Download the source files for iOS and/or Android and copy them to your project.
+3\. Download the source files and copy them to your project.
 
 iOS: Copy the two `.h` and two `.m` files to `platforms/ios/<ProjectName>/Plugins`
 
 Android: Copy `Toast.java` to `platforms/android/src/nl/xservices/plugins` (create the folders)
+
+WP8: Copy `Toast.cs` to `platforms/wp8/Plugins/nl.x-services.plugins.toast` (create the folders)
 
 ### PhoneGap Build
 
@@ -124,13 +135,17 @@ You can copy-paste these lines of code for a quick test:
 <button onclick="window.plugins.toast.show('Hello there!', 'long', 'center', function(a){console.log('toast success: ' + a)}, function(b){alert('toast error: ' + b)})">Toast show long center</button>
 ```
 
-## 5. CREDITS ##
+## 5. CREDITS
 
 This plugin was enhanced for Plugman / PhoneGap Build by [Eddy Verbruggen](http://www.x-services.nl).
 The Android code was entirely created by me.
 For iOS most credits go to this excellent [Toast for iOS project by Charles Scalesse] (https://github.com/scalessec/Toast).
 
-## 6. License
+## 6. CHANGELOG
+2.0: WP8 support
+1.0: initial version supporting Android and iOS
+
+## 7. License
 
 [The MIT License (MIT)](http://www.opensource.org/licenses/mit-license.html)
 
