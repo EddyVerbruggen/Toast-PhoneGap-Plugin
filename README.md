@@ -23,6 +23,7 @@ It's great for showing a non intrusive native notification which is guaranteed a
 * You can choose two durations: short (approx. 2 seconds), or long (approx. 5 seconds), after which the Toast automatically disappears.
 * Compatible with [Cordova Plugman](https://github.com/apache/cordova-plugman).
 * Officially supported by [PhoneGap Build](https://build.phonegap.com/plugins).
+* Minimum iOS version is [6](https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin/issues/7)
 
 Example usages:
 * "There were validation errors"
