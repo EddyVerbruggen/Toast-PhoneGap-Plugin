@@ -1,19 +1,38 @@
 exports.defineAutoTests = function() {
-
-  define('awesome tests', function() {
-    it('do something sync', function() {
-      expect(1).toBe(1);
+  describe('Plugin availability (window.plugins.toast)', function () {
+    it("should exist", function() {
+      expect(window.plugins.toast).toBeDefined();
     });
 
-    it('do something async', function(done) {
-      setTimeout(function() {
-        expect(1).toBe(1);
-        done();
-      }, 100);
+    it("should contain a platform specification that is a string", function() {
+      expect(window.plugins.toastnot).toBeDefined();
+//      expect((new String(window.device.platform)).length > 0).toBe(true);
     });
+
+      /*
+    it("should contain a version specification that is a string", function() {
+      expect(window.device.version).toBeDefined();
+      expect((new String(window.device.version)).length > 0).toBe(true);
+    });
+
+    it("should contain a UUID specification that is a string or a number", function() {
+      expect(window.device.uuid).toBeDefined();
+      if (typeof window.device.uuid == 'string' || typeof window.device.uuid == 'object') {
+        expect((new String(window.device.uuid)).length > 0).toBe(true);
+      } else {
+        expect(window.device.uuid > 0).toBe(true);
+      }
+    });
+
+    it("should contain a cordova specification that is a string", function() {
+      expect(window.device.cordova).toBeDefined();
+      expect((new String(window.device.cordova)).length > 0).toBe(true);
+    });
+
+    it("should contain a model specification that is a string", function() {
+      expect(window.device.model).toBeDefined();
+      expect((new String(window.device.model)).length > 0).toBe(true);
+    });
+    */
   });
-
-  //define('more awesome tests', function() {
-  //});
-
 };
