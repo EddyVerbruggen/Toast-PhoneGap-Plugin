@@ -2,6 +2,14 @@
 
 for Android, iOS and WP8, by [Eddy Verbruggen](http://www.x-services.nl/phonegap-toast-plugin/796)
 
+
+<table width="100%">
+    <tr>
+        <td width="100"><a href="http://plugins.telerik.com/plugin/toast"><img src="http://www.x-services.nl/github-images/telerik-verified-plugins-marketplace.png" width="97px" height="71px" alt="Marketplace logo"/></a></td>
+        <td>For a quick demo app and easy code samples, check out the plugin page at the Verified Plugins Marketplace: http://plugins.telerik.com/plugin/toast</td>
+    </tr>
+</table>
+
 ## 0. Index
 
 1. [Description](#1-description)
