@@ -1,38 +1,59 @@
-exports.defineAutoTests = function() {
-  describe('Plugin availability (window.plugins.toast)', function () {
-    it("should exist", function() {
+cordova.define("nl.x-services.plugins.toast.tests", function(require, exports, module) { exports.defineAutoTests = function() {
+  
+  var fail = function (done) {
+    expect(true).toBe(false);
+    done();
+  },
+  succeed = function (done) {
+    expect(true).toBe(true);
+    done();
+  };
+
+  describe('Plugin availability', function () {
+    it("window.plugins.toast should exist", function() {
       expect(window.plugins.toast).toBeDefined();
     });
+  });
 
-    it("should contain a platform specification that is a string", function() {
-      expect(window.plugins.toastnot).toBeDefined();
-//      expect((new String(window.device.platform)).length > 0).toBe(true);
+  describe('API functions', function () {
+    it("should define show", function() {
+      expect(window.plugins.toast.show).toBeDefined();
     });
 
-      /*
-    it("should contain a version specification that is a string", function() {
-      expect(window.device.version).toBeDefined();
-      expect((new String(window.device.version)).length > 0).toBe(true);
+    it("should define showShortTop", function() {
+      expect(window.plugins.toast.showShortTop).toBeDefined();
     });
 
-    it("should contain a UUID specification that is a string or a number", function() {
-      expect(window.device.uuid).toBeDefined();
-      if (typeof window.device.uuid == 'string' || typeof window.device.uuid == 'object') {
-        expect((new String(window.device.uuid)).length > 0).toBe(true);
-      } else {
-        expect(window.device.uuid > 0).toBe(true);
-      }
+    it("should define showShortCenter", function() {
+      expect(window.plugins.toast.showShortCenter).toBeDefined();
     });
 
-    it("should contain a cordova specification that is a string", function() {
-      expect(window.device.cordova).toBeDefined();
-      expect((new String(window.device.cordova)).length > 0).toBe(true);
+    it("should define showShortBottom", function() {
+      expect(window.plugins.toast.showShortBottom).toBeDefined();
     });
 
-    it("should contain a model specification that is a string", function() {
-      expect(window.device.model).toBeDefined();
-      expect((new String(window.device.model)).length > 0).toBe(true);
+    it("should define showLongTop", function() {
+      expect(window.plugins.toast.showLongTop).toBeDefined();
     });
-    */
+
+    it("should define showLongCenter", function() {
+      expect(window.plugins.toast.showLongCenter).toBeDefined();
+    });
+
+    it("should define showLongBottom", function() {
+      expect(window.plugins.toast.showLongBottom).toBeDefined();
+    });
+  });
+
+  describe('Invalid usage', function () {
+    it("should fail due to an invalid position", function(done) {
+     window.plugins.toast.show('hi', 'short', 'nowhere', fail.bind(null, done), succeed.bind(null, done));
+    });
+
+    it("should fail due to an invalid duration", function(done) {
+     window.plugins.toast.show('hi', 'medium', 'top', fail.bind(null, done), succeed.bind(null, done));
+    });
   });
 };
+
+});
