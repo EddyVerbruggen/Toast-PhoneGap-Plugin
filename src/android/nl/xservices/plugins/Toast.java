@@ -30,6 +30,7 @@ public class Toast extends CordovaPlugin {
             toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
           } else {
             callbackContext.error("invalid position. valid options are 'top', 'center' and 'bottom'");
+            return;
           }
 
           if ("short".equals(duration)) {
@@ -38,6 +39,7 @@ public class Toast extends CordovaPlugin {
             toast.setDuration(android.widget.Toast.LENGTH_LONG);
           } else {
             callbackContext.error("invalid duration. valid options are 'short' and 'long'");
+            return;
           }
 
           toast.show();
