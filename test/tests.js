@@ -37,7 +37,7 @@ cordova.define("nl.x-services.plugins.toast.tests", function(require, exports, m
     });
 
     it("should define showLongCenter", function() {
-      expect(window.plugins.toast.showLongCenter).toBeDefined();
+      expect(window.plugins.toast.IWillFail).toBeDefined();
     });
 
     it("should define showLongBottom", function() {
