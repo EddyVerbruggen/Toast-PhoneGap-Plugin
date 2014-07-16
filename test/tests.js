@@ -1,11 +1,11 @@
 cordova.define("nl.x-services.plugins.toast.tests", function(require, exports, module) { exports.defineAutoTests = function() {
   
   var fail = function (done) {
-    expect(true).toBe(false);
+    expect(false).toBe(true);
     done();
   },
   succeed = function (done) {
-    expect(true).toBe(true);
+    expect(false).toBe(false);
     done();
   };
 
@@ -37,7 +37,7 @@ cordova.define("nl.x-services.plugins.toast.tests", function(require, exports, m
     });
 
     it("should define showLongCenter", function() {
-      expect(window.plugins.toast.IWillFail).toBeDefined();
+      expect(window.plugins.toast.showLongCenter).toBeDefined();
     });
 
     it("should define showLongBottom", function() {
