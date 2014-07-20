@@ -82,16 +82,30 @@ namespace WPCordovaClassLib.Cordova.Commands
                             popup.VerticalAlignment = VerticalAlignment.Bottom;
                             popup.VerticalOffset = -100; // TODO can do better
                         }
-                        else // center
+                        else if ("center".Equals(position))
                         {
                             popup.VerticalAlignment = VerticalAlignment.Center;
                             popup.VerticalOffset = -50; // TODO can do way better
                         }
+                        else
+                        {
+                            DispatchCommandResult(new PluginResult(PluginResult.Status.ERROR, "invalid position. valid options are 'top', 'center' and 'bottom'"));
+                            return;
+                        }
+
+                        int hideDelay = 2800;
+                        if ("long".Equals(duration))
+                        {
+                            hideDelay = 5500;
+                        }
+                        else if (!"short".Equals(duration))
+                        {
+                            DispatchCommandResult(new PluginResult(PluginResult.Status.ERROR, "invalid duration. valid options are 'short' and 'long'"));
+                            return;
+                        }
 
                         grid.Children.Add(popup);
                         popup.IsOpen = true;
-
-                        int hideDelay = "long".Equals(duration) ? 5500 : 2800;
                         this.hidePopup(hideDelay);
                     }
                 }
