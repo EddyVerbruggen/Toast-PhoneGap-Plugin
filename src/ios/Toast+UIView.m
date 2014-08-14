@@ -46,6 +46,8 @@ static const BOOL CSToastHidesOnTap             = YES;     // excludes activity 
 static const NSString * CSToastTimerKey         = @"CSToastTimerKey";
 static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
 
+static UIView *prevToast = NULL;
+
 @interface UIView (ToastPrivate)
 
 - (void)hideToast:(UIView *)toast;
@@ -91,6 +93,10 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
 }
 
 - (void)showToast:(UIView *)toast duration:(NSTimeInterval)duration position:(id)point {
+    if(prevToast){
+        [self hideToast:prevToast];
+    }
+    prevToast = toast;
     toast.center = [self centerPointForPosition:point withToast:toast];
     toast.alpha = 0.0;
     
