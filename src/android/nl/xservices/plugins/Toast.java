@@ -6,6 +6,14 @@ import org.apache.cordova.CordovaPlugin;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+/*
+    // TODO nice way for the Toast plugin to offer a longer delay than the default short and long options
+    // TODO also look at https://github.com/JohnPersano/Supertoasts
+    new CountDownTimer(6000, 1000) {
+      public void onTick(long millisUntilFinished) {toast.show();}
+      public void onFinish() {toast.show();}
+    }.start();
+ */
 public class Toast extends CordovaPlugin {
 
   private static final String ACTION_SHOW_EVENT = "show";

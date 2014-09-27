@@ -12,7 +12,7 @@
 
   if (![position isEqual: @"top"] && ![position isEqual: @"center"] && ![position isEqual: @"bottom"]) {
     CDVPluginResult * pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"invalid position. valid options are 'top', 'center' and 'bottom'"];
-    [self writeJavascript:[pluginResult toErrorCallbackString:command.callbackId]];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     return;
   }
 
@@ -23,14 +23,14 @@
     durationInt = 5;
   } else {
     CDVPluginResult * pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"invalid duration. valid options are 'short' and 'long'"];
-    [self writeJavascript:[pluginResult toErrorCallbackString:command.callbackId]];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     return;
   }
 
   [self.webView makeToast:message duration:durationInt position:position];
-    
+
   CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-  [self writeJavascript:[pluginResult toSuccessCallbackString:command.callbackId]];
+  [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 @end
