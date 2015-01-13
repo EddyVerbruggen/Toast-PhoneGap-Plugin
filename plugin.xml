@@ -2,7 +2,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="nl.x-services.plugins.toast"
-        version="2.0.2">
+        version="2.0.3">
 
   <name>Toast</name>
 
@@ -11,7 +11,15 @@
     A Toast is a little non intrusive buttonless popup which automatically disappears.
   </description>
 
+  <author>Eddy Verbruggen</author>
+
   <license>MIT</license>
+
+  <keywords>Toast, Notification, Message, Alert</keywords>
+
+  <repo>https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git</repo>
+
+  <issue>https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin/issues</issue>
 
   <engines>
     <engine name="cordova" version=">=3.0.0"/>

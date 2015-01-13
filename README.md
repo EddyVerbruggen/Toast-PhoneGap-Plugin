@@ -61,13 +61,15 @@ Windows Phone 8
 ### Automatically (CLI / Plugman)
 Toast is compatible with [Cordova Plugman](https://github.com/apache/cordova-plugman), compatible with [PhoneGap 3.0 CLI](http://docs.phonegap.com/en/3.0.0/guide_cli_index.md.html#The%20Command-line%20Interface_add_features), here's how it works with the CLI (backup your project first!):
 
+Using the Cordova CLI and the [Cordova Plugin Registry](http://plugins.cordova.io)
 ```
-$ phonegap local plugin add https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git
-```
-or
-```
-$ cordova plugin add https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git
+$ cordova plugin add nl.x-services.plugins.toast
 $ cordova prepare
+```
+
+Or using the phonegap CLI
+```
+$ phonegap local plugin add nl.x-services.plugins.toast
 ```
 
 Toast.js is brought in automatically. There is no need to change or add anything in your html.

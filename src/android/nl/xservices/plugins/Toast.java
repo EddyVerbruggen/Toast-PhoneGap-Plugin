@@ -13,10 +13,14 @@ import org.json.JSONException;
       public void onTick(long millisUntilFinished) {toast.show();}
       public void onFinish() {toast.show();}
     }.start();
+
+    Also, check https://github.com/JohnPersano/SuperToasts
  */
 public class Toast extends CordovaPlugin {
 
   private static final String ACTION_SHOW_EVENT = "show";
+
+  private android.widget.Toast mostRecentToast;
 
   @Override
   public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
@@ -51,6 +55,7 @@ public class Toast extends CordovaPlugin {
           }
 
           toast.show();
+          mostRecentToast = toast;
           callbackContext.success();
         }
       });
@@ -59,6 +64,13 @@ public class Toast extends CordovaPlugin {
     } else {
       callbackContext.error("toast." + action + " is not a supported function. Did you mean '" + ACTION_SHOW_EVENT + "'?");
       return false;
+    }
+  }
+
+  @Override
+  public void onPause(boolean multitasking) {
+    if (mostRecentToast != null) {
+      mostRecentToast.cancel();
     }
   }
 }
