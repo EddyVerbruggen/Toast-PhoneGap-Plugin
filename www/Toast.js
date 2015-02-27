@@ -6,27 +6,27 @@ Toast.prototype.show = function (message, duration, position, successCallback, e
 };
 
 Toast.prototype.showShortTop = function (message, successCallback, errorCallback, offset) {
-  this.show(message, "short", "top", successCallback, errorCallback, xOffset && offset.x || 0, offset && offset.y || 20);
+  this.show(message, "short", "top", successCallback, errorCallback, offset && offset.x || 0, offset && offset.y || 20);
 };
 
 Toast.prototype.showShortCenter = function (message, successCallback, errorCallback, offset) {
-  this.show(message, "short", "center", successCallback, errorCallback, xOffset && offset.x || 0, offset && offset.y || 0);
+  this.show(message, "short", "center", successCallback, errorCallback, offset && offset.x || 0, offset && offset.y || 0);
 };
 
 Toast.prototype.showShortBottom = function (message, successCallback, errorCallback, offset) {
-  this.show(message, "short", "bottom", successCallback, errorCallback, xOffset && offset.x || 0, offset && offset.y || 20);
+  this.show(message, "short", "bottom", successCallback, errorCallback, offset && offset.x || 0, offset && offset.y || 20);
 };
 
 Toast.prototype.showLongTop = function (message, successCallback, errorCallback, offset) {
-  this.show(message, "long", "top", successCallback, errorCallback, xOffset && offset.x || 0, offset && offset.y || 20);
+  this.show(message, "long", "top", successCallback, errorCallback, offset && offset.x || 0, offset && offset.y || 20);
 };
 
 Toast.prototype.showLongCenter = function (message, successCallback, errorCallback, offset) {
-  this.show(message, "long", "center", successCallback, errorCallback, xOffset && offset.x || 0, offset && offset.y || 0);
+  this.show(message, "long", "center", successCallback, errorCallback, offset && offset.x || 0, offset && offset.y || 0);
 };
 
 Toast.prototype.showLongBottom = function (message, successCallback, errorCallback, offset) {
-  this.show(message, "long", "bottom", successCallback, errorCallback, xOffset && offset.x || 0, offset && offset.y || 20);
+  this.show(message, "long", "bottom", successCallback, errorCallback, offset && offset.x || 0, offset && offset.y || 20);
 };
 
 Toast.install = function () {
