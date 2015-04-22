@@ -1,8 +1,53 @@
 function Toast() {
 }
 
+Toast.prototype.optionsBuilder = function () {
+
+  // defaults
+  var message = null;
+  var duration = "short";
+  var position = "center";
+
+  return {
+    withMessage: function(m) {
+      message = m;
+      return this;
+    },
+
+    withDuration: function(d) {
+      duration = d;
+      return this;
+    },
+
+    withPosition: function(p) {
+      position = p;
+      return this;
+    },
+
+    build: function() {
+      return {
+        message: message,
+        duration: duration,
+        position: position
+      }
+    }
+  }
+};
+
+
+Toast.prototype.showWithOptions = function (options, successCallback, errorCallback) {
+  cordova.exec(successCallback, errorCallback, "Toast", "show", [options]);
+};
+
 Toast.prototype.show = function (message, duration, position, successCallback, errorCallback) {
-  cordova.exec(successCallback, errorCallback, "Toast", "show", [message, duration, position]);
+  this.showWithOptions(
+      this.optionsBuilder()
+          .withMessage(message)
+          .withDuration(duration)
+          .withPosition(position)
+          .build(),
+      successCallback,
+      errorCallback);
 };
 
 Toast.prototype.showShortTop = function (message, successCallback, errorCallback) {
