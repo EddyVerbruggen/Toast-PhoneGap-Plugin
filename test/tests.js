@@ -1,5 +1,5 @@
 exports.defineAutoTests = function() {
-  
+
   var fail = function (done) {
     expect(true).toBe(false);
     done();
@@ -18,6 +18,14 @@ exports.defineAutoTests = function() {
   describe('API functions', function () {
     it("should define show", function() {
       expect(window.plugins.toast.show).toBeDefined();
+    });
+
+    it("should define showWithOptions", function() {
+      expect(window.plugins.toast.showWithOptions).toBeDefined();
+    });
+
+    it("should define optionsBuilder", function() {
+      expect(window.plugins.toast.optionsBuilder).toBeDefined();
     });
 
     it("should define showShortTop", function() {
@@ -47,11 +55,7 @@ exports.defineAutoTests = function() {
 
   describe('Invalid usage', function () {
     it("should fail due to an invalid position", function(done) {
-     window.plugins.toast.show('hi', 'short', 'nowhere', fail.bind(null, done), succeed.bind(null, done));
-    });
-
-    it("should fail due to an invalid duration", function(done) {
-     window.plugins.toast.show('hi', 'medium', 'top', fail.bind(null, done), succeed.bind(null, done));
+      window.plugins.toast.show('hi', 'short', 'nowhere', fail.bind(null, done), succeed.bind(null, done));
     });
   });
 };
