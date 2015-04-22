@@ -5,6 +5,7 @@ import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 /*
     // TODO nice way for the Toast plugin to offer a longer delay than the default short and long options
@@ -33,13 +34,18 @@ public class Toast extends CordovaPlugin {
         return true;
       }
 
-      final String message = args.getString(0);
-      final String duration = args.getString(1);
-      final String position = args.getString(2);
+      final JSONObject options = args.getJSONObject(0);
+
+      final String message = options.getString("message");
+      final String duration = options.getString("duration");
+      final String position = options.getString("position");
 
       cordova.getActivity().runOnUiThread(new Runnable() {
         public void run() {
-          android.widget.Toast toast = android.widget.Toast.makeText(webView.getContext(), message, 0);
+          android.widget.Toast toast = android.widget.Toast.makeText(
+              webView.getContext(),
+              message,
+              "short".equals(duration) ? android.widget.Toast.LENGTH_SHORT : android.widget.Toast.LENGTH_LONG);
 
           if ("top".equals(position)) {
             toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 20);
@@ -49,15 +55,6 @@ public class Toast extends CordovaPlugin {
             toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
           } else {
             callbackContext.error("invalid position. valid options are 'top', 'center' and 'bottom'");
-            return;
-          }
-
-          if ("short".equals(duration)) {
-            toast.setDuration(android.widget.Toast.LENGTH_SHORT);
-          } else if ("long".equals(duration)) {
-            toast.setDuration(android.widget.Toast.LENGTH_LONG);
-          } else {
-            callbackContext.error("invalid duration. valid options are 'short' and 'long'");
             return;
           }
 

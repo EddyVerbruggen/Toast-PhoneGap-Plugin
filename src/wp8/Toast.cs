@@ -1,3 +1,5 @@
+using System;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,13 +28,40 @@ namespace WPCordovaClassLib.Cordova.Commands
             }
         }
 
+        [DataContract]
+        public class ToastOptions
+        {
+            [DataMember(IsRequired = true, Name = "message")]
+            public string message { get; set; }
+
+            [DataMember(IsRequired = true, Name = "duration")]
+            public string duration { get; set; }
+
+            [DataMember(IsRequired = true, Name = "position")]
+            public string position { get; set; }
+        }
+
         public void show(string options)
         {
+            ToastOptions toastOptions;
             string[] args = JSON.JsonHelper.Deserialize<string[]>(options);
-            var message = args[0];
-            var duration = args[1];
-            var position = args[2];
-            string aliasCurrentCommandCallbackId = args[3];
+            String jsonOptions = args[0];
+
+            try
+            {
+                toastOptions = JSON.JsonHelper.Deserialize<ToastOptions>(jsonOptions);
+            }
+            catch (Exception)
+            {
+                DispatchCommandResult(new PluginResult(PluginResult.Status.JSON_EXCEPTION));
+                return;
+            }
+
+            var message = toastOptions.message;
+            var duration = toastOptions.duration;
+            var position = toastOptions.position;
+
+            string aliasCurrentCommandCallbackId = args[1];
 
             Deployment.Current.Dispatcher.BeginInvoke(() =>
             {

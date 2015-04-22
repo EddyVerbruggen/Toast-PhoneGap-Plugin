@@ -70,7 +70,7 @@ static UIView *prevToast = NULL;
 
 - (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position {
     UIView *toast = [self viewForMessage:message title:nil image:nil];
-    [self showToast:toast duration:duration position:position];  
+    [self showToast:toast duration:duration position:position];
 }
 
 - (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position title:(NSString *)title {
@@ -106,8 +106,9 @@ static UIView *prevToast = NULL;
         toast.userInteractionEnabled = YES;
         toast.exclusiveTouch = YES;
     }
-    
-    [self addSubview:toast];
+  
+    // make sure that if InAppBrowser is active, we're still showing Toasts on top of it
+    [self.superview.superview addSubview:toast];
     
     [UIView animateWithDuration:CSToastFadeDuration
                           delay:0.0
