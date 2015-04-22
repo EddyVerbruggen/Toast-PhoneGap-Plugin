@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using System.Windows;
@@ -48,7 +49,7 @@ namespace WPCordovaClassLib.Cordova.Commands
 
             try
             {
-                toastOptions = JsonHelper.Deserialize<ToastOptions>(jsonOptions);
+                toastOptions = JSON.JsonHelper.Deserialize<ToastOptions>(jsonOptions);
             }
             catch (Exception)
             {
