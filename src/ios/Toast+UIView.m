@@ -93,9 +93,7 @@ static UIView *prevToast = NULL;
 }
 
 - (void)showToast:(UIView *)toast duration:(NSTimeInterval)duration position:(id)point {
-    if(prevToast){
-        [self hideToast:prevToast];
-    }
+    [self hideToast];
     prevToast = toast;
     toast.center = [self centerPointForPosition:point withToast:toast];
     toast.alpha = 0.0;
@@ -121,6 +119,12 @@ static UIView *prevToast = NULL;
                          objc_setAssociatedObject (toast, &CSToastTimerKey, timer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
                      }];
     
+}
+
+- (void)hideToast {
+  if (prevToast){
+    [self hideToast:prevToast];
+  }
 }
 
 - (void)hideToast:(UIView *)toast {

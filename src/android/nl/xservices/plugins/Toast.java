@@ -32,10 +32,8 @@ public class Toast extends CordovaPlugin {
     if (ACTION_HIDE_EVENT.equals(action)) {
       if (mostRecentToast != null) {
         mostRecentToast.cancel();
-        callbackContext.success();
-      } else {
-        callbackContext.error("No Toast has been shows yet");
       }
+      callbackContext.success();
       return true;
 
     } else if (ACTION_SHOW_EVENT.equals(action)) {
