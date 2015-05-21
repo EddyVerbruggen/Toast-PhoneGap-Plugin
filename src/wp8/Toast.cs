@@ -90,10 +90,7 @@ namespace WPCordovaClassLib.Cordova.Commands
                         pgrid.Width = Application.Current.Host.Content.ActualWidth - 80;
 
                         b.Child = pgrid;
-                        if (popup != null && popup.IsOpen)
-                        {
-                            popup.IsOpen = false;
-                        }
+                        this.hide(null);
                         popup = new Popup();
                         popup.Child = b;
   
@@ -143,6 +140,14 @@ namespace WPCordovaClassLib.Cordova.Commands
                     DispatchCommandResult(new PluginResult(PluginResult.Status.INSTANTIATION_EXCEPTION));
                 }
             });
+        }
+
+        public void hide(string options)
+        {
+            if (popup != null && popup.IsOpen)
+            {
+                popup.IsOpen = false;
+            }
         }
 
         private async void hidePopup(int delay)
