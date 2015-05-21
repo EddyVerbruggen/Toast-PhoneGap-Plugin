@@ -20,6 +20,7 @@ import org.json.JSONObject;
 public class Toast extends CordovaPlugin {
 
   private static final String ACTION_SHOW_EVENT = "show";
+  private static final String ACTION_HIDE_EVENT = "hide";
 
   private android.widget.Toast mostRecentToast;
 
@@ -28,7 +29,16 @@ public class Toast extends CordovaPlugin {
 
   @Override
   public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
-    if (ACTION_SHOW_EVENT.equals(action)) {
+    if (ACTION_HIDE_EVENT.equals(action)) {
+      if (mostRecentToast != null) {
+        mostRecentToast.cancel();
+        callbackContext.success();
+      } else {
+        callbackContext.error("No Toast has been shows yet");
+      }
+      return true;
+
+    } else if (ACTION_SHOW_EVENT.equals(action)) {
 
       if (this.isPaused) {
         return true;

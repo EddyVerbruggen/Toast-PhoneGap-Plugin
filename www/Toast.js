@@ -74,6 +74,10 @@ Toast.prototype.showLongBottom = function (message, successCallback, errorCallba
   this.show(message, "long", "bottom", successCallback, errorCallback);
 };
 
+Toast.prototype.hide = function (successCallback, errorCallback) {
+  cordova.exec(successCallback, errorCallback, "Toast", "hide", []);
+};
+
 Toast.install = function () {
   if (!window.plugins) {
     window.plugins = {};
