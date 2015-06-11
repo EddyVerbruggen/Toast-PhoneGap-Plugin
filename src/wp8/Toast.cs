@@ -39,6 +39,9 @@ namespace WPCordovaClassLib.Cordova.Commands
 
             [DataMember(IsRequired = true, Name = "position")]
             public string position { get; set; }
+
+            [DataMember(IsRequired = false, Name = "addPixelsY")]
+            public int addPixelsY { get; set; }
         }
 
         public void show(string options)
@@ -60,6 +63,7 @@ namespace WPCordovaClassLib.Cordova.Commands
             var message = toastOptions.message;
             var duration = toastOptions.duration;
             var position = toastOptions.position;
+            int addPixelsY = toastOptions.addPixelsY;
 
             string aliasCurrentCommandCallbackId = args[1];
 
@@ -104,17 +108,17 @@ namespace WPCordovaClassLib.Cordova.Commands
                         if ("top".Equals(position))
                         {
                             popup.VerticalAlignment = VerticalAlignment.Top;
-                            popup.VerticalOffset = 20;
+                            popup.VerticalOffset = 20 + addPixelsY;
                         }
                         else if ("bottom".Equals(position))
                         {
                             popup.VerticalAlignment = VerticalAlignment.Bottom;
-                            popup.VerticalOffset = -100; // TODO can do better
+                            popup.VerticalOffset = -100 + addPixelsY; // TODO can do better
                         }
                         else if ("center".Equals(position))
                         {
                             popup.VerticalAlignment = VerticalAlignment.Center;
-                            popup.VerticalOffset = -50; // TODO can do way better
+                            popup.VerticalOffset = -50 + addPixelsY; // TODO can do way better
                         }
                         else
                         {

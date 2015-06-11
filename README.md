@@ -150,7 +150,7 @@ You can copy-paste these lines of code for a quick test:
 <button onclick="window.plugins.toast.show('Hello there!', 'long', 'center', function(a){console.log('toast success: ' + a)}, function(b){alert('toast error: ' + b)})">Toast show long center</button>
 ```
 
-#### Tweaking the vertical position (iOS and Android)
+#### Tweaking the vertical position
 Since 2.1.0 you can add pixels to move the toast up or down.
 Note that `showWithOptions` can be used instead of the functions above, but it's not useful unless you want to pass `addPixelsY`.
 ```js
