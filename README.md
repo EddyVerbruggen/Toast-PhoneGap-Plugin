@@ -132,8 +132,8 @@ Toast.js is brought in automatically. There is no need to change or add anything
 ### Showing a Toast
 You have two choices to make when showing a Toast: where to show it and for how long.
 * show(message, duration, position)
- * duration: 'short', 'long'
- * position: 'top', 'center', 'bottom'
+* duration: 'short', 'long'
+* position: 'top', 'center', 'bottom'
 
 You can also use any of these convenience methods:
 * showShortTop(message)
@@ -148,6 +148,24 @@ You can copy-paste these lines of code for a quick test:
 <button onclick="window.plugins.toast.showShortTop('Hello there!', function(a){console.log('toast success: ' + a)}, function(b){alert('toast error: ' + b)})">Toast showShortTop</button>
 <button onclick="window.plugins.toast.showLongBottom('Hello there!', function(a){console.log('toast success: ' + a)}, function(b){alert('toast error: ' + b)})">Toast showLongBottom</button>
 <button onclick="window.plugins.toast.show('Hello there!', 'long', 'center', function(a){console.log('toast success: ' + a)}, function(b){alert('toast error: ' + b)})">Toast show long center</button>
+```
+
+#### Tweaking the vertical position (iOS only for now)
+Since 2.1.0 you can add pixels to move the toast up or down.
+Note that `showWithOptions` can be used instead of the functions above, but it's not useful unless you want to pass `addPixelsY`.
+```js
+function showTop() {
+  window.plugins.toast.showWithOptions(
+    {
+      message: "hey there",
+      duration: "short",
+      position: "bottom",
+      addPixelsY: -40  // added a negative value to move it up a bit (default 0)
+    },
+    onSuccess, // optional
+    onError    // optional
+  );
+}
 ```
 
 ### Hiding a Toast

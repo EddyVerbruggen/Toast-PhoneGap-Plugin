@@ -53,7 +53,7 @@ static UIView *prevToast = NULL;
 - (void)hideToast:(UIView *)toast;
 - (void)toastTimerDidFinish:(NSTimer *)timer;
 - (void)handleToastTapped:(UITapGestureRecognizer *)recognizer;
-- (CGPoint)centerPointForPosition:(id)position withToast:(UIView *)toast;
+- (CGPoint)centerPointForPosition:(id)position withToast:(UIView *)toast withAddedPixelsY:(int) addPixelsY;
 - (UIView *)viewForMessage:(NSString *)message title:(NSString *)title image:(UIImage *)image;
 - (CGSize)sizeForString:(NSString *)string font:(UIFont *)font constrainedToSize:(CGSize)constrainedSize lineBreakMode:(NSLineBreakMode)lineBreakMode;
 
@@ -71,6 +71,11 @@ static UIView *prevToast = NULL;
 - (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position {
     UIView *toast = [self viewForMessage:message title:nil image:nil];
     [self showToast:toast duration:duration position:position];
+}
+
+- (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position addPixelsY:(int)addPixelsY {
+  UIView *toast = [self viewForMessage:message title:nil image:nil];
+  [self showToast:toast duration:duration position:position addedPixelsY:addPixelsY];
 }
 
 - (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position title:(NSString *)title {
@@ -93,9 +98,13 @@ static UIView *prevToast = NULL;
 }
 
 - (void)showToast:(UIView *)toast duration:(NSTimeInterval)duration position:(id)point {
+  [self showToast:toast duration:CSToastDefaultDuration position:CSToastDefaultPosition addedPixelsY:0];
+}
+
+- (void)showToast:(UIView *)toast duration:(NSTimeInterval)duration position:(id)point addedPixelsY:(int) addPixelsY  {
     [self hideToast];
     prevToast = toast;
-    toast.center = [self centerPointForPosition:point withToast:toast];
+    toast.center = [self centerPointForPosition:point withToast:toast withAddedPixelsY:addPixelsY];
     toast.alpha = 0.0;
     
     if (CSToastHidesOnTap) {
@@ -163,7 +172,7 @@ static UIView *prevToast = NULL;
     if (existingActivityView != nil) return;
     
     UIView *activityView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CSToastActivityWidth, CSToastActivityHeight)];
-    activityView.center = [self centerPointForPosition:position withToast:activityView];
+    activityView.center = [self centerPointForPosition:position withToast:activityView withAddedPixelsY:0];
     activityView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:CSToastOpacity];
     activityView.alpha = 0.0;
     activityView.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin);
@@ -211,22 +220,22 @@ static UIView *prevToast = NULL;
 
 #pragma mark - Helpers
 
-- (CGPoint)centerPointForPosition:(id)point withToast:(UIView *)toast {
+- (CGPoint)centerPointForPosition:(id)point withToast:(UIView *)toast withAddedPixelsY:(int) addPixelsY {
     if([point isKindOfClass:[NSString class]]) {
         // convert string literals @"top", @"bottom", @"center", or any point wrapped in an NSValue object into a CGPoint
         if([point caseInsensitiveCompare:@"top"] == NSOrderedSame) {
-            return CGPointMake(self.bounds.size.width/2, (toast.frame.size.height / 2) + CSToastVerticalPadding + CSToastTopBottomOffset);
+            return CGPointMake(self.bounds.size.width/2, (toast.frame.size.height / 2) + addPixelsY + CSToastVerticalPadding + CSToastTopBottomOffset);
         } else if([point caseInsensitiveCompare:@"bottom"] == NSOrderedSame) {
-            return CGPointMake(self.bounds.size.width/2, (self.bounds.size.height - (toast.frame.size.height / 2)) - CSToastVerticalPadding - CSToastTopBottomOffset);
+            return CGPointMake(self.bounds.size.width/2, (self.bounds.size.height - (toast.frame.size.height / 2)) - CSToastVerticalPadding - CSToastTopBottomOffset + addPixelsY);
         } else if([point caseInsensitiveCompare:@"center"] == NSOrderedSame) {
-            return CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2);
+            return CGPointMake(self.bounds.size.width / 2, (self.bounds.size.height / 2) + addPixelsY);
         }
     } else if ([point isKindOfClass:[NSValue class]]) {
         return [point CGPointValue];
     }
     
     NSLog(@"Warning: Invalid position for toast.");
-    return [self centerPointForPosition:CSToastDefaultPosition withToast:toast];
+    return [self centerPointForPosition:CSToastDefaultPosition withToast:toast withAddedPixelsY:addPixelsY];
 }
 
 - (CGSize)sizeForString:(NSString *)string font:(UIFont *)font constrainedToSize:(CGSize)constrainedSize lineBreakMode:(NSLineBreakMode)lineBreakMode {
