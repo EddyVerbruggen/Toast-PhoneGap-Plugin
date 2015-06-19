@@ -114,9 +114,14 @@ static UIView *prevToast = NULL;
         toast.exclusiveTouch = YES;
     }
   
-    // make sure that if InAppBrowser is active, we're still showing Toasts on top of it
-    [self.superview.superview addSubview:toast];
-    
+    if ([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedAscending) {
+        // on iOS8 when InAppBrowser is active, the Toast is below it,
+        [self.superview.superview addSubview:toast];
+    } else {
+        // ..on iOS7 however with this fix on landscape the Toast isn't rotated automatically
+        [self.superview addSubview:toast];
+    }
+
     [UIView animateWithDuration:CSToastFadeDuration
                           delay:0.0
                         options:(UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionAllowUserInteraction)
@@ -156,7 +161,7 @@ static UIView *prevToast = NULL;
 - (void)handleToastTapped:(UITapGestureRecognizer *)recognizer {
     NSTimer *timer = (NSTimer *)objc_getAssociatedObject(self, &CSToastTimerKey);
     [timer invalidate];
-    
+
     [self hideToast:recognizer.view];
 }
 
@@ -247,7 +252,10 @@ static UIView *prevToast = NULL;
         return CGSizeMake(ceilf(boundingRect.size.width), ceilf(boundingRect.size.height));
     }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     return [string sizeWithFont:font constrainedToSize:constrainedSize lineBreakMode:lineBreakMode];
+#pragma clang diagnostic pop
 }
 
 - (UIView *)viewForMessage:(NSString *)message title:(NSString *)title image:(UIImage *)image {
