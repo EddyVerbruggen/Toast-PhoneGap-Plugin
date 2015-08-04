@@ -52,7 +52,7 @@ public class Toast extends CordovaPlugin {
       cordova.getActivity().runOnUiThread(new Runnable() {
         public void run() {
           android.widget.Toast toast = android.widget.Toast.makeText(
-              webView.getContext(),
+              cordova.getActivity().getApplicationContext(),
               message,
               "short".equals(duration) ? android.widget.Toast.LENGTH_SHORT : android.widget.Toast.LENGTH_LONG);
 
