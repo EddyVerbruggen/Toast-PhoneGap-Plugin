@@ -63,18 +63,19 @@ Toast is compatible with [Cordova Plugman](https://github.com/apache/cordova-plu
 
 Using the Cordova CLI and the [Cordova Plugin Registry](http://plugins.cordova.io)
 ```
-$ cordova plugin add nl.x-services.plugins.toast
+$ cordova plugin add cordova-plugin-x-toast
 $ cordova prepare
 ```
 
 Or using the phonegap CLI
 ```
-$ phonegap local plugin add nl.x-services.plugins.toast
+$ phonegap local plugin add cordova-plugin-x-toast
 ```
 
 Toast.js is brought in automatically. There is no need to change or add anything in your html.
 
 ### Manually
+You'd better use the CLI, but here goes:
 
 1\. Add the following xml to your `config.xml` in the root directory of your `www` folder:
 ```xml
@@ -118,11 +119,7 @@ Toast works with PhoneGap build too, but only with PhoneGap 3.0 and up.
 
 Just add the following xml to your `config.xml` to always use the latest version of this plugin:
 ```xml
-<gap:plugin name="nl.x-services.plugins.toast" source="plugins.cordova.io" />
-```
-or to use a specific version:
-```xml
-<gap:plugin name="nl.x-services.plugins.toast" source="plugins.cordova.io" version="2.0.6" />
+<gap:plugin name="cordova-plugin-x-toast" source="npm" />
 ```
 
 Toast.js is brought in automatically. There is no need to change or add anything in your html.
