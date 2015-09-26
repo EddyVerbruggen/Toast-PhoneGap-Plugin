@@ -174,7 +174,7 @@ function hide() {
 }
 ```
 
-### WP8 quircks
+### WP8 quirks
 The WP8 implementation needs a little more work, but it's perfectly useable when you keep this in mind:
 * You can't show two Toasts simultaneously.
 * Wait until the first Toast is hidden before the second is shown, otherwise the second one will be hidden quickly.
