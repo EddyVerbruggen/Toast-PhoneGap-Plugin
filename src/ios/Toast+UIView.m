@@ -80,17 +80,17 @@ static UIView *prevToast = NULL;
 
 - (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position title:(NSString *)title {
     UIView *toast = [self viewForMessage:message title:title image:nil];
-    [self showToast:toast duration:duration position:position];  
+    [self showToast:toast duration:duration position:position];
 }
 
 - (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position image:(UIImage *)image {
     UIView *toast = [self viewForMessage:message title:nil image:image];
-    [self showToast:toast duration:duration position:position];  
+    [self showToast:toast duration:duration position:position];
 }
 
 - (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration  position:(id)position title:(NSString *)title image:(UIImage *)image {
     UIView *toast = [self viewForMessage:message title:title image:image];
-    [self showToast:toast duration:duration position:position];  
+    [self showToast:toast duration:duration position:position];
 }
 
 - (void)showToast:(UIView *)toast {
@@ -106,21 +106,18 @@ static UIView *prevToast = NULL;
     prevToast = toast;
     toast.center = [self centerPointForPosition:point withToast:toast withAddedPixelsY:addPixelsY];
     toast.alpha = 0.0;
-    
+
     if (CSToastHidesOnTap) {
         UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:toast action:@selector(handleToastTapped:)];
         [toast addGestureRecognizer:recognizer];
         toast.userInteractionEnabled = YES;
         toast.exclusiveTouch = YES;
     }
-  
-    if ([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedAscending) {
-        // on iOS8 when InAppBrowser is active, the Toast is below it,
-        [self.superview.superview addSubview:toast];
-    } else {
-        // ..on iOS7 however with this fix on landscape the Toast isn't rotated automatically
-        [self.superview addSubview:toast];
-    }
+
+    // make sure that if InAppBrowser is active, we're still showing Toasts on top of it
+    UIViewController *vc = [self getTopMostViewController];
+    UIView *v = [vc view];
+    [v addSubview:toast];
 
     [UIView animateWithDuration:CSToastFadeDuration
                           delay:0.0
@@ -132,7 +129,15 @@ static UIView *prevToast = NULL;
                          // associate the timer with the toast view
                          objc_setAssociatedObject (toast, &CSToastTimerKey, timer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
                      }];
-    
+
+}
+
+- (UIViewController*) getTopMostViewController {
+  UIViewController *presentingViewController = [[[UIApplication sharedApplication] delegate] window].rootViewController;
+  while (presentingViewController.presentedViewController != nil) {
+    presentingViewController = presentingViewController.presentedViewController;
+  }
+  return presentingViewController;
 }
 
 - (void)hideToast {
@@ -175,31 +180,31 @@ static UIView *prevToast = NULL;
     // sanity
     UIView *existingActivityView = (UIView *)objc_getAssociatedObject(self, &CSToastActivityViewKey);
     if (existingActivityView != nil) return;
-    
+
     UIView *activityView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CSToastActivityWidth, CSToastActivityHeight)];
     activityView.center = [self centerPointForPosition:position withToast:activityView withAddedPixelsY:0];
     activityView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:CSToastOpacity];
     activityView.alpha = 0.0;
     activityView.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin);
     activityView.layer.cornerRadius = CSToastCornerRadius;
-    
+
     if (CSToastDisplayShadow) {
         activityView.layer.shadowColor = [UIColor blackColor].CGColor;
         activityView.layer.shadowOpacity = CSToastShadowOpacity;
         activityView.layer.shadowRadius = CSToastShadowRadius;
         activityView.layer.shadowOffset = CSToastShadowOffset;
     }
-    
+
     UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     activityIndicatorView.center = CGPointMake(activityView.bounds.size.width / 2, activityView.bounds.size.height / 2);
     [activityView addSubview:activityIndicatorView];
     [activityIndicatorView startAnimating];
-    
+
     // associate the activity view with self
     objc_setAssociatedObject (self, &CSToastActivityViewKey, activityView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    
+
     [self addSubview:activityView];
-    
+
     [UIView animateWithDuration:CSToastFadeDuration
                           delay:0.0
                         options:UIViewAnimationOptionCurveEaseOut
@@ -238,7 +243,7 @@ static UIView *prevToast = NULL;
     } else if ([point isKindOfClass:[NSValue class]]) {
         return [point CGPointValue];
     }
-    
+
     NSLog(@"Warning: Invalid position for toast.");
     return [self centerPointForPosition:CSToastDefaultPosition withToast:toast withAddedPixelsY:addPixelsY];
 }
