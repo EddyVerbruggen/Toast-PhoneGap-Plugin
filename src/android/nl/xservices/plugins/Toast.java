@@ -1,5 +1,6 @@
 package nl.xservices.plugins;
 
+import android.graphics.Color;
 import android.view.Gravity;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
@@ -52,10 +53,13 @@ public class Toast extends CordovaPlugin {
       cordova.getActivity().runOnUiThread(new Runnable() {
         public void run() {
           android.widget.Toast toast = android.widget.Toast.makeText(
-              cordova.getActivity().getApplicationContext(),
+              cordova.getActivity().getWindow().getContext(),
               message,
               "short".equals(duration) ? android.widget.Toast.LENGTH_SHORT : android.widget.Toast.LENGTH_LONG);
 
+//          toast.getView().setBackgroundColor(Color.GRAY);
+//          toast.getView().setPadding(20, 10, 20, 10);
+          toast.getView().getBackground().setTint(Color.DKGRAY);
           if ("top".equals(position)) {
             toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 20 + addPixelsY);
           } else  if ("bottom".equals(position)) {
