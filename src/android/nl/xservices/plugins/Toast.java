@@ -1,12 +1,16 @@
 package nl.xservices.plugins;
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.view.Gravity;
+
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.lang.reflect.Method;
 
 /*
     // TODO nice way for the Toast plugin to offer a longer delay than the default short and long options
@@ -53,13 +57,16 @@ public class Toast extends CordovaPlugin {
       cordova.getActivity().runOnUiThread(new Runnable() {
         public void run() {
           android.widget.Toast toast = android.widget.Toast.makeText(
-              cordova.getActivity().getWindow().getContext(),
+//              cordova.getActivity().getWindow().getContext(),
+              cordova.getActivity().getApplicationContext(),
               message,
               "short".equals(duration) ? android.widget.Toast.LENGTH_SHORT : android.widget.Toast.LENGTH_LONG);
 
-//          toast.getView().setBackgroundColor(Color.GRAY);
-//          toast.getView().setPadding(20, 10, 20, 10);
-          toast.getView().getBackground().setTint(Color.DKGRAY);
+          try {
+            final Method setTintMethod = Drawable.class.getMethod("setTint", int.class);
+            setTintMethod.invoke(toast.getView().getBackground(), Color.DKGRAY);
+          } catch (Exception ignore) {
+          }
           if ("top".equals(position)) {
             toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 20 + addPixelsY);
           } else  if ("bottom".equals(position)) {
