@@ -2,9 +2,12 @@ package nl.xservices.plugins;
 
 import android.os.Build;
 import android.view.Gravity;
+import android.view.MotionEvent;
+import android.view.View;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
+import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -77,9 +80,31 @@ public class Toast extends CordovaPlugin {
             return;
           }
 
+          toast.getView().setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+              if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                JSONObject json = new JSONObject();
+                try {
+                  json.put("event", "touch");
+                  json.put("message", message);
+                } catch (JSONException e) {
+                  e.printStackTrace();
+                }
+                callbackContext.success(json);
+                return true;
+              } else {
+                return false;
+              }
+            }
+          });
+
           toast.show();
           mostRecentToast = toast;
-          callbackContext.success();
+
+          PluginResult pr = new PluginResult(PluginResult.Status.OK);
+          pr.setKeepCallback(true);
+          callbackContext.sendPluginResult(pr);
         }
       });
 
