@@ -217,6 +217,8 @@ The Android code was entirely created by me.
 For iOS most credits go to this excellent [Toast for iOS project by Charles Scalesse] (https://github.com/scalessec/Toast).
 
 ## 6. CHANGELOG
+2.3.2: The click event introduced with 2.3.0 did not work with Android 5+.
+
 2.3.0: The plugin will now report back to JS if Toasts were tapped by the user.
 
 2.0.1: iOS messages are hidden when another one is shown. [Thanks Richie Min!](https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin/pull/13)
