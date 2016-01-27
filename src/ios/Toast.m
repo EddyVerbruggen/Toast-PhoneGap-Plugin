@@ -6,13 +6,14 @@
 
 - (void)show:(CDVInvokedUrlCommand*)command {
 
-  NSDictionary* options = [command.arguments objectAtIndex:0];
+  NSDictionary* options = [command argumentAtIndex:0];
 
-  NSString *message  = [options objectForKey:@"message"];
-  NSString *duration = [options objectForKey:@"duration"];
-  NSString *position = [options objectForKey:@"position"];
-  NSDictionary *data = [options objectForKey:@"data"];
-  NSNumber *addPixelsY = [options objectForKey:@"addPixelsY"];
+  NSString *message  = options[@"message"];
+  NSString *duration = options[@"duration"];
+  NSString *position = options[@"position"];
+  NSDictionary *data = options[@"data"];
+  NSNumber *addPixelsY = options[@"addPixelsY"];
+  NSDictionary *styling = options[@"styling"];
 
   if (![position isEqual: @"top"] && ![position isEqual: @"center"] && ![position isEqual: @"bottom"]) {
     CDVPluginResult * pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"invalid position. valid options are 'top', 'center' and 'bottom'"];
@@ -36,6 +37,7 @@
                  position:position
                addPixelsY:addPixelsY == nil ? 0 : [addPixelsY intValue]
                      data:data
+                  styling:styling
           commandDelegate:self.commandDelegate
                callbackId:command.callbackId];
 

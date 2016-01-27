@@ -19,6 +19,7 @@ for Android, iOS and WP8, by [Eddy Verbruggen](http://www.x-services.nl/phonegap
 	3. [Manually](#manually)
 	3. [PhoneGap Build](#phonegap-build)
 4. [Usage](#4-usage)
+  4. [Styling](#styling)
 5. [Credits](#5-credits)
 6. [Changelog](#6-changelog)
 7. [License](#7-license)
@@ -48,9 +49,17 @@ iOS
 
 ![ScreenShot](screenshots/screenshot-ios-toast.png)
 
+A few styling options
+
+![ScreenShot](screenshots/styling-green.png)
+
+![ScreenShot](screenshots/styling-red.png)
+
+
 Android
 
 ![ScreenShot](screenshots/screenshot-android-toast.png)
+
 
 Windows Phone 8
 
@@ -203,6 +212,30 @@ called again. You can distinguish between those events of course:
   );
 ```
 
+### Styling
+Since version 2.4.0 you can pass an optional `styling` object to the plugin.
+The defaults make sure the Toast looks the same as when you would not pass in the `styling` object at all.
+
+Note that on WP this object is currently ignored.
+
+```js
+  window.plugins.toast.showWithOptions({
+    message: "hey there",
+    duration: "short",
+    position: "bottom",
+    styling: {
+      opacity: 0.75, // 0.0 (transparent) to 1.0 (opaque). Default 0.8
+      backgroundColor: '#FF0000', // make sure you use #RRGGBB. Default #333333
+      cornerRadius: 16, // minimum is 0 (square). iOS default 20, Android default 100
+      horizontalPadding: 20, // iOS default 16, Android default 50
+      verticalPadding: 16 // iOS default 12, Android default 30
+    }
+  });
+```
+
+Tip: if you need to pass different values for iOS and Android you can use fi. the device plugin
+to determine the platform and pass `opacity: isAndroid() ? 0.7 : 0.9`.
+
 ### WP8 quirks
 The WP8 implementation needs a little more work, but it's perfectly useable when you keep this in mind:
 * You can't show two Toasts simultaneously.
@@ -217,15 +250,12 @@ The Android code was entirely created by me.
 For iOS most credits go to this excellent [Toast for iOS project by Charles Scalesse] (https://github.com/scalessec/Toast).
 
 ## 6. CHANGELOG
-2.3.2: The click event introduced with 2.3.0 did not work with Android 5+.
-
-2.3.0: The plugin will now report back to JS if Toasts were tapped by the user.
-
-2.0.1: iOS messages are hidden when another one is shown. [Thanks Richie Min!](https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin/pull/13)
-
-2.0: WP8 support
-
-1.0: initial version supporting Android and iOS
+- 2.4.0: You can now style the Toast with a number of properties. See
+- 2.3.2: The click event introduced with 2.3.0 did not work with Android 5+.
+- 2.3.0: The plugin will now report back to JS if Toasts were tapped by the user.
+- 2.0.1: iOS messages are hidden when another one is shown. [Thanks Richie Min!](https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin/pull/13)
+- 2.0: WP8 support
+- 1.0: initial version supporting Android and iOS
 
 ## 7. License
 

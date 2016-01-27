@@ -1,5 +1,7 @@
 package nl.xservices.plugins;
 
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -37,7 +39,7 @@ public class Toast extends CordovaPlugin {
   private android.widget.Toast mostRecentToast;
   private ViewGroup viewGroup;
 
-  private static final boolean IS_AT_LEAST_ANDROID5 = Build.VERSION.SDK_INT >= 21;
+  private static final boolean IS_AT_LEAST_LOLLIPOP = Build.VERSION.SDK_INT >= 21;
 
   // note that webView.isPaused() is not Xwalk compatible, so tracking it poor-man style
   private boolean isPaused;
@@ -65,20 +67,15 @@ public class Toast extends CordovaPlugin {
       final String position = options.getString("position");
       final int addPixelsY = options.has("addPixelsY") ? options.getInt("addPixelsY") : 0;
       final JSONObject data = options.has("data") ? options.getJSONObject("data") : null;
+      final JSONObject styling = options.optJSONObject("styling");
 
       cordova.getActivity().runOnUiThread(new Runnable() {
         public void run() {
           final android.widget.Toast toast = android.widget.Toast.makeText(
-              IS_AT_LEAST_ANDROID5 ? cordova.getActivity().getWindow().getContext() : cordova.getActivity().getApplicationContext(),
+              IS_AT_LEAST_LOLLIPOP ? cordova.getActivity().getWindow().getContext() : cordova.getActivity().getApplicationContext(),
               message,
               "short".equals(duration) ? android.widget.Toast.LENGTH_SHORT : android.widget.Toast.LENGTH_LONG);
 
-          // if we want to change the background color some day, we can use this
-//          try {
-//            final Method setTintMethod = Drawable.class.getMethod("setTint", int.class);
-//            setTintMethod.invoke(toast.getView().getBackground(), Color.RED); // default is Color.DKGRAY
-//          } catch (Exception ignore) {
-//          }
           if ("top".equals(position)) {
             toast.setGravity(GRAVITY_TOP, 0, BASE_TOP_BOTTOM_OFFSET + addPixelsY);
           } else  if ("bottom".equals(position)) {
@@ -90,9 +87,32 @@ public class Toast extends CordovaPlugin {
             return;
           }
 
+          // if one of the custom layout options have been passed in, draw our own shape
+          if (styling != null && Build.VERSION.SDK_INT >= 16) {
+
+            // the defaults mimic the default toast as close as possible
+            final String backgroundColor = styling.optString("backgroundColor", "#333333");
+            final double opacity = styling.optDouble("opacity", 0.8);
+            final int cornerRadius = styling.optInt("cornerRadius", 100);
+            final int horizontalPadding = styling.optInt("horizontalPadding", 50);
+            final int verticalPadding = styling.optInt("verticalPadding", 30);
+
+            GradientDrawable shape = new GradientDrawable();
+            shape.setCornerRadius(cornerRadius);
+            shape.setAlpha((int)(opacity * 255)); // 0-255, where 0 is an invisible background
+            shape.setColor(Color.parseColor(backgroundColor));
+            toast.getView().setBackground(shape);
+            toast.getView().setPadding(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding);
+
+            // this gives the toast a very subtle shadow on newer devices
+            if (Build.VERSION.SDK_INT >= 21) {
+              toast.getView().setElevation(6);
+            }
+          }
+
           // On Android >= 5 you can no longer rely on the 'toast.getView().setOnTouchListener',
           // so created something funky that compares the Toast position to the tap coordinates.
-          if (IS_AT_LEAST_ANDROID5) {
+          if (IS_AT_LEAST_LOLLIPOP) {
             getViewGroup().setOnTouchListener(new View.OnTouchListener() {
               @Override
               public boolean onTouch(View view, MotionEvent motionEvent) {
