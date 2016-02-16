@@ -7,6 +7,7 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
@@ -104,8 +105,9 @@ public class Toast extends CordovaPlugin {
             shape.setColor(Color.parseColor(backgroundColor));
             toast.getView().setBackground(shape);
             
-            text = (TextView) toast.getView().findViewById(android.R.id.message);
-            text.setTextColor(textColor);
+            final TextView toastTextView;
+            toastTextView = (TextView) toast.getView().findViewById(android.R.id.message);
+            toastTextView.setTextColor(Color.parseColor(textColor));
             
             toast.getView().setPadding(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding);
 
