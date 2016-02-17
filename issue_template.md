@@ -1,30 +1,29 @@
 ### Expected behaviour
-Tell us what should happen
+Tell us what should happen.
 
 ### Actual behaviour
-Tell us what happens instead.
+Tell us what happens instead. Provide a log message if relevant.
 
-Provide a log message if relevant.
-
-### Steps to reproduce
-1.
-2.
-3.
-
-### I've seen this happen on
-Please add hardware models and OS versions:
+### I'm seeing this behaviour on
+_Remove this hint: these checkboxes can be checked like this: [x]_
 
 - [ ] iOS device
 - [ ] iOS sim
 - [ ] Android device
 - [ ] Android sim
 
-### I've checked these
+#### Hardware models
+Example: Samsung Galaxy S6, iPhone 6s
+
+#### OS versions
+Example: Android 4.4.2, iOS 9.2
+
+### I'm not a dummy, so I've checked these
 - [ ] It happens on a fresh Cordova CLI project as well.
 - [ ] I'm waiting for `deviceready` to fire.
 - [ ] My JavaScript has no errors (`window.onerror` catches nothing).
 
-### How do we reproduce this?
+### So how can we reproduce this?
 
 #### Awesome :star::star::star::star::star:
 Provide a (link to a) minimal demo app showing the faulty behaviour.
