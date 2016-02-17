@@ -7,6 +7,7 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
@@ -92,6 +93,7 @@ public class Toast extends CordovaPlugin {
 
             // the defaults mimic the default toast as close as possible
             final String backgroundColor = styling.optString("backgroundColor", "#333333");
+            final String textColor = styling.optString("textColor", "#ffffff");
             final double opacity = styling.optDouble("opacity", 0.8);
             final int cornerRadius = styling.optInt("cornerRadius", 100);
             final int horizontalPadding = styling.optInt("horizontalPadding", 50);
@@ -102,6 +104,11 @@ public class Toast extends CordovaPlugin {
             shape.setAlpha((int)(opacity * 255)); // 0-255, where 0 is an invisible background
             shape.setColor(Color.parseColor(backgroundColor));
             toast.getView().setBackground(shape);
+            
+            final TextView toastTextView;
+            toastTextView = (TextView) toast.getView().findViewById(android.R.id.message);
+            toastTextView.setTextColor(Color.parseColor(textColor));
+            
             toast.getView().setPadding(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding);
 
             // this gives the toast a very subtle shadow on newer devices
