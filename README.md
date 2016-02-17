@@ -226,6 +226,7 @@ Note that on WP this object is currently ignored.
     styling: {
       opacity: 0.75, // 0.0 (transparent) to 1.0 (opaque). Default 0.8
       backgroundColor: '#FF0000', // make sure you use #RRGGBB. Default #333333
+      textColor: '#FFFF00', // Ditto. Default #FFFFFF
       cornerRadius: 16, // minimum is 0 (square). iOS default 20, Android default 100
       horizontalPadding: 20, // iOS default 16, Android default 50
       verticalPadding: 16 // iOS default 12, Android default 30
@@ -250,6 +251,7 @@ The Android code was entirely created by me.
 For iOS most credits go to this excellent [Toast for iOS project by Charles Scalesse] (https://github.com/scalessec/Toast).
 
 ## 6. CHANGELOG
+- 2.4.1: As an addition to 2.4.0, [Sino](https://github.com/SinoBoeckmann) added the option to change the text color!
 - 2.4.0: You can now style the Toast with a number of properties. See
 - 2.3.2: The click event introduced with 2.3.0 did not work with Android 5+.
 - 2.3.0: The plugin will now report back to JS if Toasts were tapped by the user.

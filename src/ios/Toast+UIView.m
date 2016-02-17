@@ -347,12 +347,15 @@ static id styling;
     }
     
     if (title != nil) {
+        NSString * titleLabelTextColor = styling[@"textColor"];
+        UIColor *theTitleLabelTextColor = titleLabelTextColor == nil ? [UIColor whiteColor] : [self colorFromHexString:titleLabelTextColor];
+    
         titleLabel = [[UILabel alloc] init];
         titleLabel.numberOfLines = CSToastMaxTitleLines;
         titleLabel.font = [UIFont boldSystemFontOfSize:CSToastFontSize];
         titleLabel.textAlignment = NSTextAlignmentLeft;
         titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
-        titleLabel.textColor = [UIColor whiteColor];
+        titleLabel.textColor = theTitleLabelTextColor;
         titleLabel.backgroundColor = [UIColor clearColor];
         titleLabel.alpha = 1.0;
         titleLabel.text = title;
@@ -364,11 +367,14 @@ static id styling;
     }
     
     if (message != nil) {
+        NSString * messageLabelTextColor = styling[@"textColor"];
+        UIColor *theMessageLabelTextColor = messageLabelTextColor == nil ? [UIColor whiteColor] : [self colorFromHexString:messageLabelTextColor];
+    
         messageLabel = [[UILabel alloc] init];
         messageLabel.numberOfLines = CSToastMaxMessageLines;
         messageLabel.font = [UIFont systemFontOfSize:CSToastFontSize];
         messageLabel.lineBreakMode = NSLineBreakByWordWrapping;
-        messageLabel.textColor = [UIColor whiteColor];
+        messageLabel.textColor = theMessageLabelTextColor;
         messageLabel.backgroundColor = [UIColor clearColor];
         messageLabel.alpha = 1.0;
         messageLabel.text = message;
