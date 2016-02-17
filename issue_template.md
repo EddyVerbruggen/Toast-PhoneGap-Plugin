@@ -24,6 +24,7 @@ Example: Android 4.4.2, iOS 9.2
 - [ ] My JavaScript has no errors (`window.onerror` catches nothing).
 
 ### So how can we reproduce this?
+_Remove this hint: Pick one of these - use the Preview feature of this editor to get a sense which option we like best_
 
 #### Awesome :star::star::star::star::star:
 Provide a (link to a) minimal demo app showing the faulty behaviour.
