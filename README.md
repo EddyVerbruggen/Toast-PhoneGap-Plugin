@@ -251,6 +251,7 @@ The Android code was entirely created by me.
 For iOS most credits go to this excellent [Toast for iOS project by Charles Scalesse] (https://github.com/scalessec/Toast).
 
 ## 6. CHANGELOG
+- 2.4.2: You can now also set the Toast `opacity` for iOS.
 - 2.4.1: As an addition to 2.4.0, [Sino](https://github.com/SinoBoeckmann) added the option to change the text color!
 - 2.4.0: You can now style the Toast with a number of properties. See
 - 2.3.2: The click event introduced with 2.3.0 did not work with Android 5+.

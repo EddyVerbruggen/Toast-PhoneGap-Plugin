@@ -140,11 +140,14 @@ static id styling;
     UIView *v = [vc view];
     [v addSubview:toast];
 
+    NSNumber * opacity = styling[@"opacity"];
+    CGFloat theOpacity = opacity == nil ? CSToastOpacity : [opacity floatValue];
+
     [UIView animateWithDuration:CSToastFadeDuration
                           delay:0.0
                         options:(UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionAllowUserInteraction)
                      animations:^{
-                         toast.alpha = CSToastOpacity;
+                         toast.alpha = theOpacity;
                      } completion:^(BOOL finished) {
                          NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:duration target:self selector:@selector(toastTimerDidFinish:) userInfo:toast repeats:NO];
                          // associate the timer with the toast view
@@ -319,16 +322,13 @@ static id styling;
     NSString * backgroundColor = styling[@"backgroundColor"];
     UIColor *theColor = backgroundColor == nil ? [UIColor blackColor] : [self colorFromHexString:backgroundColor];
 
-    NSNumber * opacity = styling[@"opacity"];
-    CGFloat theOpacity = opacity == nil ? CSToastOpacity : [opacity floatValue];
-
     NSNumber * horizontalPadding = styling[@"horizontalPadding"];
     NSNumber * verticalPadding = styling[@"verticalPadding"];
     CGFloat theHorizontalPadding = horizontalPadding == nil ? CSToastHorizontalPadding : [horizontalPadding floatValue];
     CGFloat theVerticalPadding = verticalPadding == nil ? CSToastVerticalPadding : [verticalPadding floatValue];
     
-    wrapperView.backgroundColor = [theColor colorWithAlphaComponent:theOpacity];
-    
+    wrapperView.backgroundColor = theColor;
+
     if(image != nil) {
         imageView = [[UIImageView alloc] initWithImage:image];
         imageView.contentMode = UIViewContentModeScaleAspectFit;
@@ -349,7 +349,7 @@ static id styling;
     if (title != nil) {
         NSString * titleLabelTextColor = styling[@"textColor"];
         UIColor *theTitleLabelTextColor = titleLabelTextColor == nil ? [UIColor whiteColor] : [self colorFromHexString:titleLabelTextColor];
-    
+
         titleLabel = [[UILabel alloc] init];
         titleLabel.numberOfLines = CSToastMaxTitleLines;
         titleLabel.font = [UIFont boldSystemFontOfSize:CSToastFontSize];
@@ -369,7 +369,7 @@ static id styling;
     if (message != nil) {
         NSString * messageLabelTextColor = styling[@"textColor"];
         UIColor *theMessageLabelTextColor = messageLabelTextColor == nil ? [UIColor whiteColor] : [self colorFromHexString:messageLabelTextColor];
-    
+
         messageLabel = [[UILabel alloc] init];
         messageLabel.numberOfLines = CSToastMaxMessageLines;
         messageLabel.font = [UIFont systemFontOfSize:CSToastFontSize];
