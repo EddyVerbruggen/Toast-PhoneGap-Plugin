@@ -199,7 +199,7 @@ called again. You can distinguish between those events of course:
       duration: "short",
       position: "bottom",
       addPixelsY: -40,  // (optional) added a negative value to move it up a bit (default 0)
-      data: {'foo','bar'} // (optional) pass in a JSON object here (it will be sent back in the success callback below)
+      data: {'foo':'bar'} // (optional) pass in a JSON object here (it will be sent back in the success callback below)
     },
     // implement the success callback
     function(result) {
