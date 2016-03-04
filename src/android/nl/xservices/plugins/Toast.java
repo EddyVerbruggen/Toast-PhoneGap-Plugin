@@ -45,25 +45,19 @@ public class Toast extends CordovaPlugin {
   // note that webView.isPaused() is not Xwalk compatible, so tracking it poor-man style
   private boolean isPaused;
 
+  private String currentMessage;
+  private JSONObject currentData;
+
   @Override
   public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
     if (ACTION_HIDE_EVENT.equals(action)) {
       if (mostRecentToast != null) {
         mostRecentToast.cancel();
         getViewGroup().setOnTouchListener(null);
+        returnTapEvent("hide", currentMessage, currentData, callbackContext);
+        mostRecentToast = null;
       }
-      final JSONObject hideOptions = args.getJSONObject(0);
-      final String hidemessage = hideOptions.getString("message");
-      final JSONObject hideData = hideOptions.has("data") ? hideOptions.getJSONObject("data") : null;
-      final JSONObject json = new JSONObject();
-      try {
-        json.put("event", "hide");
-        json.put("message", hidemessage);
-        json.put("data", hideData);
-      } catch (JSONException e) {
-        e.printStackTrace();
-      }
-      callbackContext.success(json);
+      callbackContext.success();
       return true;
 
     } else if (ACTION_SHOW_EVENT.equals(action)) {
@@ -80,6 +74,9 @@ public class Toast extends CordovaPlugin {
       final int addPixelsY = options.has("addPixelsY") ? options.getInt("addPixelsY") : 0;
       final JSONObject data = options.has("data") ? options.getJSONObject("data") : null;
       final JSONObject styling = options.optJSONObject("styling");
+
+      currentMessage = message;
+      currentData = data;
 
       cordova.getActivity().runOnUiThread(new Runnable() {
         public void run() {
@@ -173,7 +170,7 @@ public class Toast extends CordovaPlugin {
 
                 if (tapped) {
                   getViewGroup().setOnTouchListener(null);
-                  return returnTapEvent(message, data, callbackContext);
+                  return returnTapEvent("touch", message, data, callbackContext);
                 }
                 return false;
               }
@@ -182,12 +179,27 @@ public class Toast extends CordovaPlugin {
             toast.getView().setOnTouchListener(new View.OnTouchListener() {
               @Override
               public boolean onTouch(View view, MotionEvent motionEvent) {
-                return motionEvent.getAction() == MotionEvent.ACTION_DOWN && returnTapEvent(message, data, callbackContext);
+                return motionEvent.getAction() == MotionEvent.ACTION_DOWN && returnTapEvent("touch", message, data, callbackContext);
               }
             });
           }
 
+          Thread thread = new Thread(){
+            @Override
+            public void run() {
+                 try {
+                    Thread.sleep("short".equals(duration) ? 2000 : 3500);
+                    if (mostRecentToast != null) {
+                      returnTapEvent("hide", message, data, callbackContext);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+             }  
+           };
+
           toast.show();
+          thread.start();
           mostRecentToast = toast;
 
           PluginResult pr = new PluginResult(PluginResult.Status.OK);
@@ -203,10 +215,10 @@ public class Toast extends CordovaPlugin {
     }
   }
 
-  private boolean returnTapEvent(String message, JSONObject data, CallbackContext callbackContext) {
+  private boolean returnTapEvent(String eventName, String message, JSONObject data, CallbackContext callbackContext) {
     final JSONObject json = new JSONObject();
     try {
-      json.put("event", "touch");
+      json.put("event", eventName);
       json.put("message", message);
       json.put("data", data);
     } catch (JSONException e) {
