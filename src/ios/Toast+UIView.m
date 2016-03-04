@@ -185,6 +185,15 @@ static id styling;
 
 - (void)toastTimerDidFinish:(NSTimer *)timer {
     [self hideToast:(UIView *)timer.userInfo];
+    
+    // also send an event back to JS
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:msg, @"message", @"hide", @"event", nil];
+    if (data != nil) {
+        [dict setObject:data forKey:@"data"];
+    }
+    
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:dict];
+    [commandDelegate sendPluginResult:pluginResult callbackId:callbackId];
 }
 
 - (void)handleToastTapped:(UITapGestureRecognizer *)recognizer {

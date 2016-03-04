@@ -52,7 +52,18 @@ public class Toast extends CordovaPlugin {
         mostRecentToast.cancel();
         getViewGroup().setOnTouchListener(null);
       }
-      callbackContext.success();
+      final JSONObject hideOptions = args.getJSONObject(0);
+      final String hidemessage = hideOptions.getString("message");
+      final JSONObject hideData = hideOptions.has("data") ? hideOptions.getJSONObject("data") : null;
+      final JSONObject json = new JSONObject();
+      try {
+        json.put("event", "hide");
+        json.put("message", hidemessage);
+        json.put("data", hideData);
+      } catch (JSONException e) {
+        e.printStackTrace();
+      }
+      callbackContext.success(json);
       return true;
 
     } else if (ACTION_SHOW_EVENT.equals(action)) {
