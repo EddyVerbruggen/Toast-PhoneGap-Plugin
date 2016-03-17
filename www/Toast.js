@@ -16,7 +16,7 @@ Toast.prototype.optionsBuilder = function () {
     },
 
     withDuration: function(d) {
-      duration = d;
+      duration = d.toString();
       return this;
     },
 
@@ -43,6 +43,7 @@ Toast.prototype.optionsBuilder = function () {
 
 
 Toast.prototype.showWithOptions = function (options, successCallback, errorCallback) {
+  options.duration = (options.duration === undefined ? 'long' : options.duration.toString());
   cordova.exec(successCallback, errorCallback, "Toast", "show", [options]);
 };
 
