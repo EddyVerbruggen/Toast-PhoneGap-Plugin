@@ -90,6 +90,7 @@ public class Toast extends CordovaPlugin {
             // the defaults mimic the default toast as close as possible
             final String backgroundColor = styling.optString("backgroundColor", "#333333");
             final String textColor = styling.optString("textColor", "#ffffff");
+            final Double textSize = styling.optDouble("textSize", -1);
             final double opacity = styling.optDouble("opacity", 0.8);
             final int cornerRadius = styling.optInt("cornerRadius", 100);
             final int horizontalPadding = styling.optInt("horizontalPadding", 50);
@@ -104,6 +105,9 @@ public class Toast extends CordovaPlugin {
             final TextView toastTextView;
             toastTextView = (TextView) toast.getView().findViewById(android.R.id.message);
             toastTextView.setTextColor(Color.parseColor(textColor));
+            if (textSize > -1) {
+              toastTextView.setTextSize(textSize.floatValue());
+            }
 
             toast.getView().setPadding(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding);
 

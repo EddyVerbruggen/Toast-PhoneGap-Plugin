@@ -25,7 +25,6 @@ If you like this plugin and want to say thanks please send a PR or donation. Bot
   4. [Styling](#styling)
 5. [Credits](#5-credits)
 6. [Changelog](#6-changelog)
-7. [License](#7-license)
 
 ## 1. Description
 
@@ -230,6 +229,7 @@ Note that on WP this object is currently ignored.
       opacity: 0.75, // 0.0 (transparent) to 1.0 (opaque). Default 0.8
       backgroundColor: '#FF0000', // make sure you use #RRGGBB. Default #333333
       textColor: '#FFFF00', // Ditto. Default #FFFFFF
+      textSize: 20.5, // Default is approx. 13.
       cornerRadius: 16, // minimum is 0 (square). iOS default 20, Android default 100
       horizontalPadding: 20, // iOS default 16, Android default 50
       verticalPadding: 16 // iOS default 12, Android default 30
@@ -254,6 +254,7 @@ The Android code was entirely created by me.
 For iOS most credits go to this excellent [Toast for iOS project by Charles Scalesse] (https://github.com/scalessec/Toast).
 
 ## 6. CHANGELOG
+- 2.5.1: You can now specify the `textSize` used in the font for iOS and Android.
 - 2.5.0: By popular demand: Specify the duration of the Toast on iOS and Android. Pass in `short` (2000ms), `long` (4000ms), or any nr of milliseconds: `900`.
 - 2.4.2: You can now also set the Toast `opacity` for iOS.
 - 2.4.1: As an addition to 2.4.0, [Sino](https://github.com/SinoBoeckmann) added the option to change the text color!
@@ -263,25 +264,3 @@ For iOS most credits go to this excellent [Toast for iOS project by Charles Scal
 - 2.0.1: iOS messages are hidden when another one is shown. [Thanks Richie Min!](https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin/pull/13)
 - 2.0: WP8 support
 - 1.0: initial version supporting Android and iOS
-
-## 7. License
-
-[The MIT License (MIT)](http://www.opensource.org/licenses/mit-license.html)
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
