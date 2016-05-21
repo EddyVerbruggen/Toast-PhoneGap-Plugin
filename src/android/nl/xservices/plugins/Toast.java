@@ -4,6 +4,10 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.CountDownTimer;
+import android.text.Layout;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.AlignmentSpan;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -49,7 +53,14 @@ public class Toast extends CordovaPlugin {
       }
 
       final JSONObject options = args.getJSONObject(0);
-      final String message = options.getString("message");
+      final String msg = options.getString("message");
+      final Spannable message = new SpannableString(msg);
+      message.setSpan(
+          new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER),
+          0,
+          msg.length() - 1,
+          Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+
       final String duration = options.getString("duration");
       final String position = options.getString("position");
       final int addPixelsY = options.has("addPixelsY") ? options.getInt("addPixelsY") : 0;
@@ -159,7 +170,7 @@ public class Toast extends CordovaPlugin {
               final boolean tapped = tapX >= startX && tapX <= endX &&
                   tapY >= startY && tapY <= endY;
 
-              return tapped && returnTapEvent(message, data, callbackContext);
+              return tapped && returnTapEvent(msg, data, callbackContext);
             }
           });
 
