@@ -35,6 +35,8 @@ public class Toast extends CordovaPlugin {
   private android.widget.Toast mostRecentToast;
   private ViewGroup viewGroup;
 
+  private static final boolean IS_AT_LEAST_LOLLIPOP = Build.VERSION.SDK_INT >= 21;
+
   // note that webView.isPaused() is not Xwalk compatible, so tracking it poor-man style
   private boolean isPaused;
 
@@ -79,7 +81,7 @@ public class Toast extends CordovaPlugin {
             hideAfterMs = Integer.parseInt(duration);
           }
           final android.widget.Toast toast = android.widget.Toast.makeText(
-              Build.VERSION.SDK_INT >= 21 ? cordova.getActivity().getWindow().getContext() : cordova.getActivity().getApplicationContext(),
+              IS_AT_LEAST_LOLLIPOP ? cordova.getActivity().getWindow().getContext() : cordova.getActivity().getApplicationContext(),
               message,
               android.widget.Toast.LENGTH_LONG // actually controlled by a timer further down
           );
@@ -128,51 +130,60 @@ public class Toast extends CordovaPlugin {
             }
           }
 
-          // On newer Android devices you can no longer rely on the 'toast.getView().setOnTouchListener',
+          // On Android >= 5 you can no longer rely on the 'toast.getView().setOnTouchListener',
           // so created something funky that compares the Toast position to the tap coordinates.
-          getViewGroup().setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-              if (motionEvent.getAction() != MotionEvent.ACTION_DOWN) {
-                return false;
+          if (IS_AT_LEAST_LOLLIPOP) {
+            getViewGroup().setOnTouchListener(new View.OnTouchListener() {
+              @Override
+              public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() != MotionEvent.ACTION_DOWN) {
+                  return false;
+                }
+                if (mostRecentToast == null || !mostRecentToast.getView().isShown()) {
+                  getViewGroup().setOnTouchListener(null);
+                  return false;
+                }
+
+                float w = mostRecentToast.getView().getWidth();
+                float startX = (view.getWidth() / 2) - (w / 2);
+                float endX = (view.getWidth() / 2) + (w / 2);
+
+                float startY;
+                float endY;
+
+                float g = mostRecentToast.getGravity();
+                float y = mostRecentToast.getYOffset();
+                float h = mostRecentToast.getView().getHeight();
+
+                if (g == GRAVITY_BOTTOM) {
+                  startY = view.getHeight() - y - h;
+                  endY = view.getHeight() - y;
+                } else if (g == GRAVITY_CENTER) {
+                  startY = (view.getHeight() / 2) + y - (h / 2);
+                  endY = (view.getHeight() / 2) + y + (h / 2);
+                } else {
+                  // top
+                  startY = y;
+                  endY = y + h;
+                }
+
+                float tapX = motionEvent.getX();
+                float tapY = motionEvent.getY();
+
+                final boolean tapped = tapX >= startX && tapX <= endX &&
+                    tapY >= startY && tapY <= endY;
+
+                return tapped && returnTapEvent(msg, data, callbackContext);
               }
-              if (mostRecentToast == null || !mostRecentToast.getView().isShown()) {
-                getViewGroup().setOnTouchListener(null);
-                return false;
+            });
+          } else {
+            toast.getView().setOnTouchListener(new View.OnTouchListener() {
+              @Override
+              public boolean onTouch(View view, MotionEvent motionEvent) {
+                return motionEvent.getAction() == MotionEvent.ACTION_DOWN && returnTapEvent(msg, data, callbackContext);
               }
-
-              float w = mostRecentToast.getView().getWidth();
-              float startX = (view.getWidth() / 2) - (w / 2);
-              float endX = (view.getWidth() / 2) + (w / 2);
-
-              float startY;
-              float endY;
-
-              float g = mostRecentToast.getGravity();
-              float y = mostRecentToast.getYOffset();
-              float h = mostRecentToast.getView().getHeight();
-
-              if (g == GRAVITY_BOTTOM) {
-                startY = view.getHeight() - y - h;
-                endY = view.getHeight() - y;
-              } else if (g == GRAVITY_CENTER) {
-                startY = (view.getHeight() / 2) + y - (h / 2);
-                endY = (view.getHeight() / 2) + y + (h / 2);
-              } else {
-                // top
-                startY = y;
-                endY = y + h;
-              }
-
-              float tapX = motionEvent.getX();
-              float tapY = motionEvent.getY();
-
-              final boolean tapped = tapX >= startX && tapX <= endX &&
-                  tapY >= startY && tapY <= endY;
-
-              return tapped && returnTapEvent(msg, data, callbackContext);
-            }
-          });
+            });
+          }
 
           // trigger show every 2500 ms for as long as the requested duration
           _timer = new CountDownTimer(hideAfterMs, 2500) {
