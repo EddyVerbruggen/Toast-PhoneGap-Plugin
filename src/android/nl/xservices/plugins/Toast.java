@@ -193,7 +193,10 @@ public class Toast extends CordovaPlugin {
           // trigger show every 2500 ms for as long as the requested duration
           _timer = new CountDownTimer(hideAfterMs, 2500) {
             public void onTick(long millisUntilFinished) {toast.show();}
-            public void onFinish() {toast.cancel();}
+            public void onFinish() {
+              returnTapEvent("hide", msg, data, callbackContext);
+              toast.cancel();
+            }
           }.start();
 
           mostRecentToast = toast;
