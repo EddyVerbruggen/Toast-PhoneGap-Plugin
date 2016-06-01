@@ -40,11 +40,14 @@ public class Toast extends CordovaPlugin {
   // note that webView.isPaused() is not Xwalk compatible, so tracking it poor-man style
   private boolean isPaused;
 
+  private String currentMessage;
+  private JSONObject currentData;
   private static CountDownTimer _timer;
 
   @Override
   public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
     if (ACTION_HIDE_EVENT.equals(action)) {
+      returnTapEvent("hide", currentMessage, currentData, callbackContext);
       hide();
       callbackContext.success();
       return true;
@@ -68,6 +71,9 @@ public class Toast extends CordovaPlugin {
       final int addPixelsY = options.has("addPixelsY") ? options.getInt("addPixelsY") : 0;
       final JSONObject data = options.has("data") ? options.getJSONObject("data") : null;
       final JSONObject styling = options.optJSONObject("styling");
+
+      currentMessage = msg;
+      currentData = data;
 
       cordova.getActivity().runOnUiThread(new Runnable() {
         public void run() {
@@ -173,22 +179,24 @@ public class Toast extends CordovaPlugin {
                 final boolean tapped = tapX >= startX && tapX <= endX &&
                     tapY >= startY && tapY <= endY;
 
-                return tapped && returnTapEvent(msg, data, callbackContext);
+                return tapped && returnTapEvent("touch", msg, data, callbackContext);
               }
             });
           } else {
             toast.getView().setOnTouchListener(new View.OnTouchListener() {
               @Override
               public boolean onTouch(View view, MotionEvent motionEvent) {
-                return motionEvent.getAction() == MotionEvent.ACTION_DOWN && returnTapEvent(msg, data, callbackContext);
+                return motionEvent.getAction() == MotionEvent.ACTION_DOWN && returnTapEvent("touch", msg, data, callbackContext);
               }
             });
           }
-
           // trigger show every 2500 ms for as long as the requested duration
           _timer = new CountDownTimer(hideAfterMs, 2500) {
             public void onTick(long millisUntilFinished) {toast.show();}
-            public void onFinish() {toast.cancel();}
+            public void onFinish() {
+              returnTapEvent("hide", msg, data, callbackContext);
+              toast.cancel();
+            }
           }.start();
 
           mostRecentToast = toast;
@@ -207,6 +215,7 @@ public class Toast extends CordovaPlugin {
     }
   }
 
+
   private void hide() {
     if (mostRecentToast != null) {
       mostRecentToast.cancel();
@@ -217,17 +226,16 @@ public class Toast extends CordovaPlugin {
     }
   }
 
-  private boolean returnTapEvent(String message, JSONObject data, CallbackContext callbackContext) {
+  private boolean returnTapEvent(String eventName, String message, JSONObject data, CallbackContext callbackContext) {
     final JSONObject json = new JSONObject();
     try {
-      json.put("event", "touch");
+      json.put("event", eventName);
       json.put("message", message);
       json.put("data", data);
     } catch (JSONException e) {
       e.printStackTrace();
     }
     callbackContext.success(json);
-    hide();
     return true;
   }
 
