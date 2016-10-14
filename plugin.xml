@@ -72,13 +72,22 @@
     <source-file src="src/wp8/Toast.cs" />
   </platform>
 
-    <platform name="blackberry10">
-        <source-file src="src/blackberry10/index.js" target-dir="Toast"/>
-        <lib-file src="src/blackberry10/native/device/libToast.so" arch="device"/>
-        <lib-file src="src/blackberry10/native/simulator/libToast.so" arch="simulator"/>
-        <config-file target="www/config.xml" parent="/widget">
-            <feature name="Toast" value="Toast" />
-        </config-file>
-    </platform>
-  
+  <!-- blackberry 10 -->
+  <platform name="blackberry10">
+    <source-file src="src/blackberry10/index.js" target-dir="Toast"/>
+    <lib-file src="src/blackberry10/native/device/libToast.so" arch="device"/>
+    <lib-file src="src/blackberry10/native/simulator/libToast.so" arch="simulator"/>
+    <config-file target="www/config.xml" parent="/widget">
+        <feature name="Toast" value="Toast" />
+    </config-file>
+  </platform>
+
+  <!-- windows -->
+  <platform name="windows">
+    <!-- Override Toast.js -->
+    <js-module src="src/windows/ToastProxy.js" name="ToastProxy">
+      <clobbers target="window.plugins.toast" />
+    </js-module>
+    <asset src="src/windows/toast-x.css" target="css/toast-x.css" />
+  </platform>
 </plugin>
