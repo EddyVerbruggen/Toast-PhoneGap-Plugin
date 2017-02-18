@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-x-toast",
-  "version": "2.5.2",
+  "version": "2.6.0",
   "description": "This plugin allows you to show a Toast. A Toast is a little non intrusive buttonless popup which automatically disappears.",
   "cordova": {
     "id": "cordova-plugin-x-toast",
@@ -8,6 +8,7 @@
       "ios",
       "android",
       "wp8",
+      "windows",
       "blackberry10"
     ]
   },
@@ -24,6 +25,7 @@
     "cordova-ios",
     "cordova-android",
     "cordova-wp8",
+    "cordova-windows",
     "cordova-blackberry10"
   ],
   "engines": [
