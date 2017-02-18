@@ -24,9 +24,9 @@ var toastProxy = {
             successCallback({
                 event: "touch",
                 message: options[0].message,
-                data: options[0].data,
+                data: options[0].data
             });
-        }
+        };
 
         toast.ondismissed = function (event) {
             toastProxy.lastDisplayedNotification = null;
@@ -35,12 +35,12 @@ var toastProxy = {
                 message: options[0].message,
                 data: options[0].data
             });
-        }
+        };
 
         toast.onfailed = function(err) {
             toastProxy.lastDisplayedNotification = null;
             errorCallback(err);
-        }
+        };
 
         notifications.ToastNotificationManager.createToastNotifier().show(toast);
     },
@@ -51,6 +51,6 @@ var toastProxy = {
             this.lastDisplayedNotification = null;
         }
     }
-}
+};
 
 cordova.commandProxy.add("Toast", toastProxy);
