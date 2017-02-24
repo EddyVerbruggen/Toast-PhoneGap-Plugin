@@ -32,9 +32,6 @@ This plugin allows you to show a native Toast (a little text popup) on iOS, Andr
 It's great for showing a non intrusive native notification which is guaranteed always in the viewport of the browser.
 * You can choose where to show the Toast: at the top, center or bottom of the screen.
 * You can choose two durations: short (approx. 2 seconds), or long (approx. 5 seconds), after which the Toast automatically disappears.
-* Compatible with [Cordova Plugman](https://github.com/apache/cordova-plugman).
-* Officially supported by [PhoneGap Build](https://build.phonegap.com/plugins).
-* Minimum iOS version is [6](https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin/issues/7).
 
 Example usages:
 * "There were validation errors"
