@@ -38,9 +38,9 @@ Example usages:
 * "Account created successfully"
 * "The record was deleted"
 * "Login successful"
-* "The battery is almost dead"
 * "You are now logged out"
 * "Connection failure, please try again later"
+* "Created Order #00287
 
 ## 2. Screenshots
 
