@@ -137,7 +137,7 @@ Toast.js is brought in automatically. There is no need to change or add anything
 ### Showing a Toast
 You have two choices to make when showing a Toast: where to show it and for how long.
 * show(message, duration, position)
-* duration: 'short', 'long', '3000', 900 (the latter are milliseconds)
+* duration: 'short', 'long', '3000', 9000 (the latter are milliseconds)
 * position: 'top', 'center', 'bottom'
 
 You can also use any of these convenience methods:
@@ -276,7 +276,7 @@ For iOS most credits go to this excellent [Toast for iOS project by Charles Scal
 - 2.6.0: Windows support!
 - 2.5.2: Multi-line wrapping Toasts are now center aligned.
 - 2.5.1: You can now specify the `textSize` used in the font for iOS and Android.
-- 2.5.0: By popular demand: Specify the duration of the Toast on iOS and Android. Pass in `short` (2000ms), `long` (4000ms), or any nr of milliseconds: `900`.
+- 2.5.0: By popular demand: Specify the duration of the Toast on iOS and Android. Pass in `short` (3000ms), `long` (4000ms), or any nr of milliseconds: `9000`.
 - 2.4.2: You can now also set the Toast `opacity` for iOS.
 - 2.4.1: As an addition to 2.4.0, [Sino](https://github.com/SinoBoeckmann) added the option to change the text color!
 - 2.4.0: You can now style the Toast with a number of properties. See
