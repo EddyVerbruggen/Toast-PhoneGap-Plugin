@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-        xmlns:android="http://schemas.android.com/apk/res/android"
         id="cordova-plugin-x-toast"
-        version="2.6.0">
+        version="2.6.1">
 
   <name>Toast</name>
 
@@ -80,7 +79,7 @@
         <feature name="Toast" value="Toast" />
       </config-file>
   </platform>
-  
+
   <!-- windows -->
   <platform name="windows">
     <js-module src="src/windows/toastProxy.js" name="ToastProxy">
@@ -90,5 +89,5 @@
       <feature name="Toast" value="Toast" />
     </config-file>
   </platform>
-  
+
 </plugin>
