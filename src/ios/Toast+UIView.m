@@ -157,7 +157,7 @@ static id styling;
 }
 
 - (UIViewController*) getTopMostViewController {
-  UIViewController *presentingViewController = [[[UIApplication sharedApplication] delegate] window].rootViewController;
+  UIViewController *presentingViewController = [[UIApplication sharedApplication] keyWindow].rootViewController;
   while (presentingViewController.presentedViewController != nil) {
     presentingViewController = presentingViewController.presentedViewController;
   }
