@@ -28,9 +28,6 @@
     <clobbers target="window.plugins.toast" />
   </js-module>
 
-  <js-module src="test/tests.js" name="tests">
-  </js-module>
-
   <!-- ios -->
   <platform name="ios">
 
