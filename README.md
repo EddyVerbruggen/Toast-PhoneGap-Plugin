@@ -273,7 +273,7 @@ The Android code was entirely created by me.
 For iOS most credits go to this excellent [Toast for iOS project by Charles Scalesse] (https://github.com/scalessec/Toast).
 
 ## 6. CHANGELOG
-- 2.6.1: [iOS view hierarchy fix.](https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin/pull/112)
+- 2.6.2: [iOS view hierarchy fix.](https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin/pull/112)
 - 2.6.0: Windows support!
 - 2.5.2: Multi-line wrapping Toasts are now center aligned.
 - 2.5.1: You can now specify the `textSize` used in the font for iOS and Android.
