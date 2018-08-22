@@ -36,6 +36,7 @@ public class Toast extends CordovaPlugin {
   private ViewGroup viewGroup;
 
   private static final boolean IS_AT_LEAST_LOLLIPOP = Build.VERSION.SDK_INT >= 21;
+  private static final boolean IS_AT_LEAST_PIE = Build.VERSION.SDK_INT >= 28;
 
   // note that webView.isPaused() is not Xwalk compatible, so tracking it poor-man style
   private boolean isPaused;
@@ -192,7 +193,12 @@ public class Toast extends CordovaPlugin {
           }
           // trigger show every 2500 ms for as long as the requested duration
           _timer = new CountDownTimer(hideAfterMs, 2500) {
-            public void onTick(long millisUntilFinished) { }
+            public void onTick(long millisUntilFinished) {
+              // see https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin/issues/116
+              if (!IS_AT_LEAST_PIE) {
+                toast.show();
+              }
+            }
             public void onFinish() {
               returnTapEvent("hide", msg, data, callbackContext);
               toast.cancel();

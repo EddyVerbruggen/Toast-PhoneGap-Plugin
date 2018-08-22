@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         id="cordova-plugin-x-toast"
-        version="2.6.2">
+        version="2.7.0">
 
   <name>Toast</name>
 
