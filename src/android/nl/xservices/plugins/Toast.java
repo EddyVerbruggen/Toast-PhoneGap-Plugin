@@ -13,6 +13,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.util.Log;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
@@ -20,6 +21,10 @@ import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
 
 public class Toast extends CordovaPlugin {
 
@@ -37,6 +42,7 @@ public class Toast extends CordovaPlugin {
 
   private static final boolean IS_AT_LEAST_LOLLIPOP = Build.VERSION.SDK_INT >= 21;
   private static final boolean IS_AT_LEAST_PIE = Build.VERSION.SDK_INT >= 28;
+  private static final boolean IS_MIUI_V10 = Toast.isMIUIV10();
 
   // note that webView.isPaused() is not Xwalk compatible, so tracking it poor-man style
   private boolean isPaused;
@@ -195,7 +201,7 @@ public class Toast extends CordovaPlugin {
           _timer = new CountDownTimer(hideAfterMs, 2500) {
             public void onTick(long millisUntilFinished) {
               // see https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin/issues/116
-              if (!IS_AT_LEAST_PIE) {
+              if (!IS_AT_LEAST_PIE && !IS_MIUI_V10) {
                 toast.show();
               }
             }
@@ -221,6 +227,36 @@ public class Toast extends CordovaPlugin {
     }
   }
 
+  private static Boolean isMIUIV10() {
+    Boolean isMIUIV10 = false;
+    if("xiaomi".equals(Build.MANUFACTURER.toLowerCase()) && "V10".equals(getSystemProperty("ro.miui.ui.version.name"))) {
+      isMIUIV10 = true;
+    }
+    return isMIUIV10;
+  }
+
+  private static String getSystemProperty(String propName) {
+    String line;
+    BufferedReader input = null;
+    try {
+      Process p = Runtime.getRuntime().exec("getprop " + propName);
+      input = new BufferedReader(new InputStreamReader(p.getInputStream()), 1024);
+      line = input.readLine();
+      input.close();
+    } catch (IOException ex) {
+      Log.e("xToastPlugin", "Unable to read sysprop " + propName, ex);
+      return null;
+    } finally {
+      if (input != null) {
+        try {
+          input.close();
+        } catch (IOException e) {
+          Log.e("xToastPlugin", "Exception while closing InputStream", e);
+        }
+      }
+    }
+    return line;
+  }
 
   private void hide() {
     if (mostRecentToast != null) {
