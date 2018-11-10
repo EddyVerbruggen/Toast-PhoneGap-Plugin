@@ -195,9 +195,10 @@ public class Toast extends CordovaPlugin {
           _timer = new CountDownTimer(hideAfterMs, 2500) {
             public void onTick(long millisUntilFinished) {
               // see https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin/issues/116
-              if (!IS_AT_LEAST_PIE) {
-                toast.show();
-              }
+              // and https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin/issues/120
+//              if (!IS_AT_LEAST_PIE) {
+//                toast.show();
+//              }
             }
             public void onFinish() {
               returnTapEvent("hide", msg, data, callbackContext);
