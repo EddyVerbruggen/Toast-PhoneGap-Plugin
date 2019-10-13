@@ -231,7 +231,7 @@ called again. You can distinguish between those events of course:
   );
 ```
 
-The success callback is useful when your toast is binded to a notification id in your backend and you have to mark it as `read` when the toast is done, or to update the notifications counter for iOS. The usage of this will be defined by your application logic. Use the `result.data` object to support your specific logic.
+The success callback is useful when your toast is bound to a notification id in your backend and you have to mark it as `read` when the toast is done, or to update the notifications counter for iOS. The usage of this will be defined by your application logic. Use the `result.data` object to support your specific logic.
 
 ### Styling
 Since version 2.4.0 you can pass an optional `styling` object to the plugin.
