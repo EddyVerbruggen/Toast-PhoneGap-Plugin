@@ -16,9 +16,9 @@
 
   <keywords>Toast, Notification, Message, Alert</keywords>
 
-  <repo>https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git</repo>
+  <repo>https://github.com/oceanex97/Toast-PhoneGap-Plugin.git</repo>
 
-  <issue>https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin/issues</issue>
+  <issue>https://github.com/oceanex97/Toast-PhoneGap-Plugin/issues</issue>
 
   <engines>
     <engine name="cordova" version=">=3.0.0"/>
