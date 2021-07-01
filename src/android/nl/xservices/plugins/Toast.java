@@ -146,9 +146,17 @@ public class Toast extends CordovaPlugin {
                 if (motionEvent.getAction() != MotionEvent.ACTION_DOWN) {
                   return false;
                 }
-                if (mostRecentToast == null || !mostRecentToast.getView().isShown()) {
-                  getViewGroup().setOnTouchListener(null);
-                  return false;
+                // on Android 11 getView is deprecated and return null the previous condition crashes on android
+                // if the user tap on the notification
+                if (!(mostRecentToast != null && mostRecentToast.getView() != null && mostRecentToast.getView().isShown())) {
+                  // if getview is not null so mostRecentToast.getView().isShown() i can execute old code
+                  if (mostRecentToast.getView() != null) {
+                    getViewGroup().setOnTouchListener(null);
+                    return true;
+                  }else {
+                    // getView null notify the touch event
+                    return returnTapEvent("touch", msg, data, callbackContext);
+                  }
                 }
 
                 float w = mostRecentToast.getView().getWidth();
