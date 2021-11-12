@@ -26,9 +26,9 @@ public class Toast extends CordovaPlugin {
   private static final String ACTION_SHOW_EVENT = "show";
   private static final String ACTION_HIDE_EVENT = "hide";
 
-  private static final int GRAVITY_TOP = Gravity.TOP|Gravity.CENTER_HORIZONTAL;
-  private static final int GRAVITY_CENTER = Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL;
-  private static final int GRAVITY_BOTTOM = Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL;
+  private static final int GRAVITY_TOP = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
+  private static final int GRAVITY_CENTER = Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL;
+  private static final int GRAVITY_BOTTOM = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
 
   private static final int BASE_TOP_BOTTOM_OFFSET = 20;
 
@@ -40,7 +40,8 @@ public class Toast extends CordovaPlugin {
   private static final boolean IS_AT_LEAST_PIE = Build.VERSION.SDK_INT >= 28;
   private static final boolean IS_AT_LEAST_R = Build.VERSION.SDK_INT >= 30;
 
-  // note that webView.isPaused() is not Xwalk compatible, so tracking it poor-man style
+  // note that webView.isPaused() is not Xwalk compatible, so tracking it poor-man
+  // style
   private boolean isPaused;
 
   private String currentMessage;
@@ -153,9 +154,17 @@ public class Toast extends CordovaPlugin {
                 if (motionEvent.getAction() != MotionEvent.ACTION_DOWN) {
                   return false;
                 }
-                if (mostRecentToast == null || !mostRecentToast.getView().isShown()) {
-                  getViewGroup().setOnTouchListener(null);
-                  return false;
+                // on Android 11 getView is deprecated and return null the previous condition crashes on android
+                // if the user tap on the notification
+                if (!(mostRecentToast != null && Build.VERSION.SDK_INT < 30)) {
+                  // if getview is not null so mostRecentToast.getView().isShown() i can execute old code
+                  
+                    getViewGroup().setOnTouchListener(null);
+                    return true;
+                  }else {
+                    // getView null notify the touch event
+                    return returnTapEvent("touch", msg, data, callbackContext);
+                  }
                 }
 
                 float w = mostRecentToast.getView().getWidth();
@@ -200,35 +209,26 @@ public class Toast extends CordovaPlugin {
           }
           // trigger show every 2500 ms for as long as the requested duration
           _timer = new CountDownTimer(hideAfterMs, 2500) {
-            public void onTick(long millisUntilFinished) {
-              // see https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin/issues/116
-              // and https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin/issues/120
-//              if (!IS_AT_LEAST_PIE) {
-//                toast.show();
-//              }
-            }
-            public void onFinish() {
-              returnTapEvent("hide", msg, data, callbackContext);
-              toast.cancel();
-            }
-          }.start();
 
-          mostRecentToast = toast;
-          toast.show();
-
-          PluginResult pr = new PluginResult(PluginResult.Status.OK);
-          pr.setKeepCallback(true);
-          callbackContext.sendPluginResult(pr);
-        }
-      });
-
-      return true;
-    } else {
-      callbackContext.error("toast." + action + " is not a supported function. Did you mean '" + ACTION_SHOW_EVENT + "'?");
-      return false;
-    }
+  public void onTick(long millisUntilFinished) {
+    // see https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin/issues/116
+    // and https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin/issues/120
+    // if (!IS_AT_LEAST_PIE) {
+    // toast.show();
+    // }
   }
 
+  public void onFinish() {
+    returnTapEvent("hide", msg, data, callbackContext);
+    toast.cancel();
+  }}.start();
+
+  mostRecentToast=toast;toast.show();
+
+  PluginResult pr = new PluginResult(PluginResult.Status.OK);pr.setKeepCallback(true);callbackContext.sendPluginResult(pr);
+  }});
+
+  return true;}else{callbackContext.error("toast."+action+" is not a supported function. Did you mean '"+ACTION_SHOW_EVENT+"'?");return false;}}
 
   private void hide() {
     if (mostRecentToast != null) {
